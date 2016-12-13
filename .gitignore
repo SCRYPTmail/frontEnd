@@ -1,0 +1,4 @@
+.idea/
+.idea/*
+app/models/variable/defaultSettings.js
+node_modules/*

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/ionicons.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/smartnotif.css">
+
+        <link rel="stylesheet" type="text/css" href="/css/dataTables/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/dataTables/dataTables.bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/css/summernote/summernote.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/summernote/summernote-bs3.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css"/>
+
+        <link rel="stylesheet" type="text/css" href="/css/select2/select2.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/splash.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/animate.min.css">
+
+    <script src="/js/main/jquery-2.1.3.min.js"></script>
+
+   <!--[if gte IE 11]><!-->
+    <script data-main="app/main" src="js/main/require.js"></script>
+
+    <style type="text/css">
+        .standard-button,
+        .navbar-register-button {
+            filter: none;
+        }
+    </style>
+    <!--<![endif]-->
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (navigator.userAgent.match(/msie 10.0/i) ){
+                alert('Site requires Internet Explorer 11 or higher. Please upgrade you browser or use Google Chrome or Firefox');
+            }
+        });
+    </script>
+
+    <!--[if !IE]><!-->
+    <!--<script data-main="app/main" src="/js/main/require.js"></script>-->
+   <!--<![endif]-->
+
+
+    <title>SCRYPTmail.com</title>
+    <meta name="description"
+          content="SCRYPTmail - Privacy is your right, not a privilege. Our service is easy to use and provides superior protection for your emails.">
+
+    <meta property="og:title" content="SCRYPTmail - Lets email privately"/>
+    <meta property="og:image" content="https://scryptmail.com/img/logo.jpg"/>
+    <meta property="og:description" content="SCRYPTmail - your emails stay protected with us."/>
+
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- #FAVICONS-->
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+
+</head>
+<body>
+
+
+<!--[if lt IE 12]>
+Site requires Internet Explorer 11 or higher.
+Please upgrade you browser or use Google Chrome or Firefox
+<![endif]-->
+
+<!--[if gte IE 12]><!-->
+
+<div class="preloader">
+    <div class="status">
+        &nbsp;
+    </div>
+</div>
+
+<div id="mainBody">
+
+</div>
+
+
+<!--<![endif]-->
+
+<!--[if !IE]><!-->
+
+<div class="preloader">
+    <div class="status">
+        &nbsp;
+    </div>
+</div>
+
+<div id="mainBody">
+
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="yModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <h4 class="modal-title" id="yModalLabel">Thank you for registration!</h4>
+
+            <div class="modal-body custom-scroll terms-body">
+
+                <div id="left">
+                    <!--Please login to your account.-->
+                    Before logging in, please <b>download the secret token</b>. You will need this token to reset your
+                    password or secret phrase. You can read more about it in our <a
+                        href="http://blog.scryptmail.com/reset-password" target="_blank">blog</a>.<br><br>
+                    <span class="text-danger" style="display:none;" id="browsfailed"><i class="fa fa-warning"></i> Some browsers are not able to save the generated file, and this message will show. Please save this string into file:<br> <b
+                            class="text-default" style="word-break:break-all;"></b></span>
+                </div>
+
+                <button class="btn btn-primary standard-button" id="token" type="button" onclick="downloadToken();"
+                        style="margin-bottom:20px;"><i class="fa fa-save"></i> Download Token
+                </button>
+
+
+                <button class="btn btn-primary standard-button" type="button" data-toggle="modal" data-target="#yModal">
+                    <i class="fa fa-check"></i> Ok
+                </button>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--<![endif]-->
+
+
+<!-- Piwik -->
+<script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="//piwik.scryptmail.com/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 1]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<noscript><p><img src="//piwik.scryptmail.com/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+
+</body>
+</html>
