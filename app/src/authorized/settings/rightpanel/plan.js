@@ -689,7 +689,8 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
                     secLog: decodedPlan['secLog'],
                     filtEmail: decodedPlan['filter'],
                     claimAmount:amount,
-                    isAlrdClaimed:currentPlan['creditUsed'],
+                    //isAlrdClaimed:currentPlan['creditUsed'],
+					isAlrdClaimed:true,
 
                     cycleEnd:timeEnd.toLocaleDateString()
                 });
@@ -1270,7 +1271,7 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 								</div>
 
                                 <span className="bold">
-                                Info: <i className="">You will be asked to enter desired refill amount.<br/> It may take up to a minute to reflect new balance after successfull payment.</i></span>
+                                Info: <i className="">You will be asked to enter desired refill amount.<br/> It may take up to a minute to reflect new balance after successfull payment. <br/> If you pay with bitcoin, make sure you enter exact amount you are willing to pay, otherwise it may be marked as mispayment.</i></span>
 
 
 														<div className="clearfix"></div>
