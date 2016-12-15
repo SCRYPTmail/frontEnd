@@ -2948,6 +2948,8 @@ define([
 			var emailToFolder = {
 				'fr': newMessage['meta']['from'],
 				'to': newMessage['meta']['to'],
+				'cc': newMessage['meta']['toCC'],
+				'bcc': newMessage['meta']['toBCC'],
 				'sb': newMessage['meta']['subject'],
 				'bd': newMessage['meta']['body'],
 				'at': newMessage['meta']['attachment'],

@@ -78,8 +78,6 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 							recipientTitle.push(app.globalF.parseEmail(str)['email']);
 
 					});
-					recipient=recipient.join(', ');
-					recipientTitle=recipientTitle.join(', ');
 
 				}else if(Object.keys(folderData['to']).length>0){
 
@@ -113,17 +111,83 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
                         }
 
 					});
-					recipient=recipient.join(', ');
-					recipientTitle=recipientTitle.join(', ');
+
 				}
                 //console.log(recipient);
 
 				if(t=='Sent' || t=='Draft'){
 
-					var str=app.transform.from64str(folderData['fr']);
-					fromEmail=app.globalF.parseEmail(str,true)['name'];
-					fromTitle=app.globalF.parseEmail(str,true)['email'];
+                  //  console.log(folderData['to']);
+                  //  console.log(folderData['cc']);
+                  //  console.log(folderData['bcc']);
+                    fromEmail='';
+                    fromTitle='';
 
+                    if( folderData['cc']!=undefined && Object.keys(folderData['cc']).length>0){
+
+                        $.each(folderData['cc'], function( index, email ) {
+                            try{
+                                var str=app.transform.from64str(index);
+                                var name="";
+                                if(email===undefined){
+                                    name=str;
+                                }else{
+                                    if(email['name']===undefined){
+                                        name=str;
+                                    }else{
+                                        if(email['name']===""){
+                                            name=str;
+                                        }else{
+                                            name=app.transform.from64str(email['name']);
+                                        }
+                                    }
+                                }
+                                recipient.push(name);
+                                recipientTitle.push(str);
+                            } catch (err) {
+                                recipient.push('error');
+                                recipientTitle.push('error');
+                            }
+
+                        });
+
+                    }
+
+                    if( folderData['bcc']!=undefined && Object.keys(folderData['bcc']).length>0){
+
+                        $.each(folderData['bcc'], function( index, email ) {
+                            try{
+                                var str=app.transform.from64str(index);
+                                var name="";
+                                if(email===undefined){
+                                    name=str;
+                                }else{
+                                    if(email['name']===undefined){
+                                        name=str;
+                                    }else{
+                                        if(email['name']===""){
+                                            name=str;
+                                        }else{
+                                            name=app.transform.from64str(email['name']);
+                                        }
+                                    }
+                                }
+                                recipient.push(name);
+                                recipientTitle.push(str);
+                            } catch (err) {
+                                recipient.push('error');
+                                recipientTitle.push('error');
+                            }
+
+                        });
+
+                    }
+
+                    recipient=recipient.join(', ');
+                    recipientTitle=recipientTitle.join(', ');
+
+                    fromEmail = recipient;
+                    fromTitle = recipientTitle;
 
 				}else{
 
@@ -139,8 +203,12 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 					}else{
 						trust=""
 					}
+                    recipient=recipient.join(', ');
+                    recipientTitle=recipientTitle.join(', ');
 
 				}
+
+
 
 				if(folderData['tg'].length>0){
 					//console.log(folderData['tg']);
@@ -222,7 +290,7 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
                     delete  selectedEmails[$(this).parents('tr').attr('id')];
                 }
 
-                console.log(selectedEmails);
+             //   console.log(selectedEmails);
             });
 
 
@@ -363,7 +431,7 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
                         var messageId=$( this ).closest('tr').attr('id');
                         selectedEmails[messageId]=true;
                     });
-                    console.log(selectedEmails);
+                  //  console.log(selectedEmails);
                 }else{
                     //console.log('unselecting')
                     //console.log(selectedEmails);
@@ -392,11 +460,11 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 			switch(i) {
 
                 case 'wholeFolder':
-                    console.log('wholeFolder')
+                  //  console.log('wholeFolder')
                     break;
 
                 case 'thisPage':
-                    console.log('thisPage')
+                  //  console.log('thisPage')
                     break;
 
 				case 'readEmail':
