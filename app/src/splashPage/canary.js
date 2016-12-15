@@ -25,7 +25,7 @@ define(['react'], function (React) {
 						<div className="colored-line"></div>
                         {this.state.noRequestTime}
                         <br/>
-                        Updated Aug 03, 2016
+                        Updated Dec 15, 2016
 					</div>
 					A <a href="https://en.wikipedia.org/wiki/Warrant_canary" target="_blank">warrant canary</a> is a method by which a communications service provider informs its users that the provider has not been served with a secret subpoena.
 
