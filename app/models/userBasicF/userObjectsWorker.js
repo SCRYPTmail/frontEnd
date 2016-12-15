@@ -466,7 +466,7 @@ define([
                             app.globalF.syncUpdates();
                             app.mailMan.startShift();
 
-                            console.log(app.user);
+                            //console.log(app.user);
                             callback();
                         }, 500);
 
@@ -482,7 +482,7 @@ define([
                         app.globalF.syncUpdates();
                         app.mailMan.startShift();
 
-                        console.log(app.user);
+                        //console.log(app.user);
                         callback();
                     }, 500);
                 }
@@ -613,7 +613,7 @@ define([
                             balanceShort:false,
                         });
                     }
-                    console.log();
+                    //console.log();
 
                     if(result['data']['currentVersion']>app.user.get("currentVersion")){
                         app.user.set({"pleaseUpdate": true});
@@ -715,7 +715,7 @@ define([
 
 					app.user.assignVariablesFromProfileObject();
 					app.user.assignVariablesFromUserObject();
-					console.log(app.user);
+					//console.log(app.user);
 				}
 				callback(result);
 				//console.log(app.user);
@@ -798,15 +798,15 @@ define([
 							$.each(userMemoryObj, function (index, value) {
 
 								if (userServerObj[index] == undefined || userServerObj[index]['nonce'] > value['nonce']) {
-									console.log('from serv');
+								//	console.log('from serv');
 									//retrieve this index from server
 								} else if (userMemoryObj[index]['nonce'] < value['nonce']) {
-									console.log('to serv');
+								//	console.log('to serv');
 									//send this index to server
 								}
 
-								console.log(index);
-								console.log(value['nonce']);
+								//console.log(index);
+								//console.log(value['nonce']);
 							});
 
 						}
@@ -822,25 +822,25 @@ define([
 			switch (action) {
 				case 'emailOpen':
 					//updateObjects
-					console.log('saveOpen');
+				//	console.log('saveOpen');
 					//todo save folder Object
 					break;
 
 				case 'emailMove':
-					console.log('emailMove');
+					//console.log('emailMove');
 					//todo save folder Object
 					break;
 
 				case 'emailsRead':
-					console.log('emailsRead');
+					//console.log('emailsRead');
 					//todo save folder Object
 					break;
 				case 'addTag':
-					console.log('addTag');
+					//console.log('addTag');
 					//todo save folder Object
 					break;
 				case 'emailsToFolder':
-					console.log('emailsToFolder');
+					//console.log('emailsToFolder');
 					//todo save folder Object with check new emails without block
 					break;
 
@@ -853,7 +853,7 @@ define([
 			switch (action) {
 
 				case 'userProfile':
-					console.log('userProfile');
+				//	console.log('userProfile');
 
 					var encryptedObj=app.userObjects.get("EncryptedProfileObject");
 

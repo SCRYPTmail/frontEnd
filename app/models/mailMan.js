@@ -54,7 +54,7 @@ define([
                                             app.mailMan.decodeV1(result['data']['v1'], function (decryptedSeedObject) {
                                                 //next step is to get metadata from email
                                                 app.mailMan.getMetaV1(decryptedSeedObject, function (metaObjects) {
-                                                    console.log(metaObjects);
+                                                   // console.log(metaObjects);
                                                     if (metaObjects['response'] === 'success' && Object.keys(metaObjects['data']).length > 0) {
                                                         app.mailMan.decodeMetaV1(metaObjects['data'], function (decryptedMeta) {
                                                             if (Object.keys(decryptedMeta).length > 0) {
@@ -263,7 +263,7 @@ define([
             }
             //console.log(filter);
 
-            console.log(decryptedMeta);
+           // console.log(decryptedMeta);
 
             callback(decryptedMeta);
 
@@ -414,7 +414,7 @@ define([
 
         saveEmailIntoInbox: function(decryptedMeta,callback){
 
-            console.log(decryptedMeta);
+          //  console.log(decryptedMeta);
 
             /*
                 1) get new emailId,
