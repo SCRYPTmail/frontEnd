@@ -95,6 +95,18 @@ define(['react','app'], function (React,app) {
 
 
 					break;
+
+				case 'gotoPayment':
+					app.mixins.canNavigate(function(decision){
+						if(decision){
+							Backbone.history.navigate("/settings/Plan", {
+								trigger : true
+							});
+
+						}
+					});
+
+					break;
 				case 'logOut':
 					app.auth.logout();
 
@@ -162,6 +174,7 @@ define(['react','app'], function (React,app) {
 								<li><a href="https://blog.scryptmail.com/how-to-use-scryptmail" target="_blank">How To</a></li>
 								<li><a href='http://blog.scryptmail.com/q-a' target="_blank">Q & A</a></li>
 								<li><a href='http://blog.scryptmail.com' target="_blank">Blog</a></li>
+								<li><a onClick={this.handleClick.bind(this, 'gotoPayment')}>Need more features?</a></li>
 							</ul>
 
 							<ul className="nav navbar-nav pull-right">
