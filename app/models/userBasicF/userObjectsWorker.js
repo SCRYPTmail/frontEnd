@@ -440,13 +440,6 @@ define([
                         allkeys[shamail]=value['addrType']
                     });
 
-                $.ajax({
-                    method: "POST",
-                    url: "api/assignTypesV2",
-                    data: allkeys,
-                    dataType: "json"
-                })
-
 
                 if(parseInt(app.user.get("userPlan")['planData']['folderExpire'])===1){
 
