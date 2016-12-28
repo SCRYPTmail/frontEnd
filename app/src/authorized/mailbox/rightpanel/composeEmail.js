@@ -1684,7 +1684,7 @@ define(['react','app', 'summernote','select2'], function (React,app,summernote,s
 						{protect}
 
 						<button className="btn btn-primary btn-sm" disabled={this.state.sendingProgress} onClick={this.handleClick.bind(this, 'sendEmail')} id="sendingEmail"><i className={(this.state.sendingProgress===true?'fa fa-refresh fa-spin':"")}></i>{(this.state.sendingProgress===true? "Sending":"Send")}</button>
-						<button className={"btn btn-danger btn-sm "+(this.state.messageId==""?"hidden":"")} data-placement="bottom" data-toggle="popover-hover" data-trigger="focus" title="" data-content="Delete message" data-original-title="" onClick={this.handleClick.bind(this, 'deleteDraft')} disabled={this.state.sendingProgress}><i className="fa fa-trash fa-lg"></i></button>
+						<button className={"btn btn-danger btn-sm "} data-placement="bottom" data-toggle="popover-hover" data-trigger="focus" title="" data-content="Delete message" data-original-title="" onClick={this.handleClick.bind(this, 'deleteDraft')} disabled={(this.state.sendingProgress || this.state.messageId=="")}><i className="fa fa-trash fa-lg"></i></button>
 					</div>
 				</div>
 

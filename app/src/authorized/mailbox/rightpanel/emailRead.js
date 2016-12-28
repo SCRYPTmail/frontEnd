@@ -1082,9 +1082,11 @@ define(['react','app'], function (React,app) {
 					<h3>Please Select Email</h3>
                     <br/>
                     <br/>
-                    Premium Features price reduction. <a href="https://blog.scryptmail.com/price-change-and-future-of-scryptmail/" target="_blank">Help us to help you.</a>
+					We've launched crowdfunding campaign to help us to build application for iOS and Android devices. Your help is very important to us!
+                    <br/> <br/>
+                    Clicking on the image will lead you to indiegogo website and will open it in the new tab. <br/> Thank you for your support.
+                    <a href="https://igg.me/at/scryptmail/x/9771028" target="_blank" className="row"> <img src="img/indca.jpg"/></a>
 
-                    <br/><br/>Please report any problem to us right of way.
 
                 <br/><br/>
                     Comments or question?<br/>Please contact us at <b>support@scryptmail.com</b>
