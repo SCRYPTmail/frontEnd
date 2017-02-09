@@ -924,9 +924,16 @@ define(['react','app'], function (React,app) {
 
 
 				case 'showHeader':
+                    console.log(app.user.get('currentMessageView'));
 					var w = window.open();
 					var html ='<pre ' +
 						'style="white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word;">'+app.transform.escapeTags(app.transform.from64str(app.user.get('currentMessageView')['originalBody']['rawHeader']))+'<pre>';
+                    html +='------ HTML ---------' +
+                        '<br /><pre ' +
+                        'style="white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word;">'+app.transform.escapeTags(app.transform.from64str(app.user.get('currentMessageView')['originalBody']['body']['html']))+'<pre><br />------END HTML ---------<br /><br />';
+                    html +='------ TEXT ---------' +
+                        '<br /><pre ' +
+                        'style="white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word;">'+app.transform.escapeTags(app.transform.from64str(app.user.get('currentMessageView')['originalBody']['body']['text']))+'<pre><br />------ END TEXT ---------';
 					$(w.document.body).html(html);
 					break;
 
@@ -1080,13 +1087,6 @@ define(['react','app'], function (React,app) {
 
 				<div className={"emailNo "+(this.state.hideEmailRead?"":"hidden")}>
 					<h3>Please Select Email</h3>
-                    <br/>
-                    <br/>
-					We've launched crowdfunding campaign to help us to build application for iOS and Android devices. Your help is very important to us!
-                    <br/> <br/>
-                    Clicking on the image will lead you to indiegogo website and will open it in the new tab. <br/> Thank you for your support.
-                    <a href="https://igg.me/at/scryptmail/x/9771028" target="_blank" className="row"> <img src="img/indca.jpg"/></a>
-
 
                 <br/><br/>
                     Comments or question?<br/>Please contact us at <b>support@scryptmail.com</b>
