@@ -395,7 +395,13 @@ define([
                     var userObj=app.user.get("DecryptedBlackListObject");
                     $.each(app.userObjects.get("EncryptedBlackListObject"), function (index, value) {
                         userObj[index]={};
-                        userObj[index]['data']=JSON.parse(app.transform.fromAes64(app.user.get("folderKey"),value['data']));
+                        try{
+                            userObj[index]['data']=JSON.parse(app.transform.fromAes64(app.user.get("folderKey"),value['data']));
+                        } catch (err) {
+                            userObj[index]['data']={};
+                        }
+
+                        console.log(userObj[index]['data']);
                         userObj[index]['hash']=value['hash'];
                         userObj[index]['index']=value['index'];
                         userObj[index]['nonce']=value['nonce'];
