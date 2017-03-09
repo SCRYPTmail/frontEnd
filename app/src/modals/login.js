@@ -179,9 +179,9 @@ define(['react','app','validation'], function (React,app,Validation) {
 						<form className="modal-content" id="loginUserForm" onKeyDown={this.handleClick.bind(this, 'enterLogin')}>
 							<h4 className="dark-text form-heading">Login</h4>
 
-							<div className="alert alert-info text-left ">
-								Waiting for smartphone app? <a href="https://igg.me/at/scryptmail/x/9771028" target="_blank">https://igg.me/at/scryptmail/x/9771028</a>
-							</div>
+                            <div className="alert alert-info text-left ">
+                                Now available on TOR: http://scryptmaildniwm6.onion
+                            </div>
 
 							<div className="alert alert-info text-left hidden">
                                 Now available on TOR: http://scryptmaildniwm6.onion
