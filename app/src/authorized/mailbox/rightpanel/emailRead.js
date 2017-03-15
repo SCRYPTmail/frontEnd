@@ -713,15 +713,7 @@ define(['react','app'], function (React,app) {
                     var size=(file['encoding']==="base64"?app.transform.from64bin(file['contents']).length:file['contents'].length);
                     var name=file['fileName'];
 
-                    var oMyBlob = new Blob([arbuf], {type: type});
-                    var a = document.createElement('a');
-
-
-                    //a.href = window.URL.createObjectURL(oMyBlob.slice(0, size));
-                    a.href = window.URL.createObjectURL(oMyBlob);
-                    a.download = name;
-                    document.body.appendChild(a);
-                    a.click();
+                    app.globalF.createDownloadLink(arbuf,type, name);
 
                     break;
 
@@ -772,6 +764,8 @@ define(['react','app'], function (React,app) {
 
 					fileButton.html('<i class="fa fa-spin fa-refresh"></i> Downloading');
 
+                    var thisComp=this;
+
 					app.globalF.downloadFile(fileName,modKey,version,function(result){
 
                     if(result===false){
@@ -780,28 +774,12 @@ define(['react','app'], function (React,app) {
 
                         fileButton.html('Download');
 
-                        //try {
-                      //  console.log(fileBId);
 
                         var decryptedFile64 = app.transform.fromAesBin(key, result);
-
                         var decryptedFile=app.transform.from64bin(decryptedFile64);
 
-                        //	var decryptedFile = window.atob(decryptedFile64);
-                        //console.log(decryptedFile);
-                        //console.log(decryptedFile2);
-
                         var arbuf=app.globalF.base64ToArrayBuffer(decryptedFile);
-
-                        var oMyBlob = new Blob([arbuf], {type: type});
-                        var a = document.createElement('a');
-
-
-                        //a.href = window.URL.createObjectURL(oMyBlob.slice(0, size));
-                        a.href = window.URL.createObjectURL(oMyBlob);
-                        a.download = name;
-                        document.body.appendChild(a);
-                        a.click();
+                        app.globalF.createDownloadLink(arbuf,type, name);
 
                     }
 
@@ -975,6 +953,7 @@ define(['react','app'], function (React,app) {
 			}
 
 		},
+
         readPGP:function(PGPtext){
 
             var thisComp=this;

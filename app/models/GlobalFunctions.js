@@ -395,6 +395,39 @@ define([
 				return false;
 			}
 		},
+        createDownloadLink:function(str,type, fileName){
+
+            if(window.navigator.msSaveOrOpenBlob) {
+
+                var fileData = [str];
+                var blobObject = new Blob(fileData);
+
+                var a = document.createElement('a');
+                a.id='clickme';
+                a.innerHTML = "Click to download file";
+
+                var mydiv = document.getElementById("infoModBody");
+                mydiv.appendChild(a);
+
+                $('#clickme').click(function(){
+                    window.navigator.msSaveOrOpenBlob(blobObject, fileName);
+                });
+
+                $('#infoModal').modal('show');
+
+            } else {
+
+                var oMyBlob = new Blob([str], {type: type});
+                var a = document.createElement('a');
+
+                a.href = window.URL.createObjectURL(oMyBlob);
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+
+            }
+        },
+
 		getBitLength: function (publicKeyPacket) {
 			var size = -1;
 			if (publicKeyPacket.mpi.length > 0) {

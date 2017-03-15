@@ -37,6 +37,7 @@ define(['react','app'], function (React,app) {
 							</div>
 							<div className="modal-body">
 							<p id="infoModBody">
+
 								</p>
 
 							</div>

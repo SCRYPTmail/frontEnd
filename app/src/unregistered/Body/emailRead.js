@@ -408,14 +408,7 @@ define(['react','app'], function (React,app) {
 
 						var arbuf=app.globalF.base64ToArrayBuffer(decryptedFile);
 
-						var oMyBlob = new Blob([arbuf], {type: type});
-						var a = document.createElement('a');
-
-						//a.href = window.URL.createObjectURL(oMyBlob.slice(0, size));
-						a.href = window.URL.createObjectURL(oMyBlob);
-						a.download = name;
-						document.body.appendChild(a);
-						a.click();
+                        app.globalF.createDownloadLink(arbuf,type, name);
 
 					});
 
