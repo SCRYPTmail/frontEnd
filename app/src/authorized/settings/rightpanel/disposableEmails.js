@@ -1156,7 +1156,7 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 
 			$("#fromAliasEmail").rules("add", {
 				required: true,
-				minlength: 3,
+				minlength: 2,
 				maxlength: 90,
 				uniqueUserName:true,
 				remote: {
