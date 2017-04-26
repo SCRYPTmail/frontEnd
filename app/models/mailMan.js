@@ -705,7 +705,7 @@ define([
 
             var post={
                 'emailHashes':JSON.stringify(app.mailMan.get("emailHashes")),
-                'limit':15,
+                'limit':50,
                 'lastIdKey': app.user.get("lastIdKey")
             }
 
