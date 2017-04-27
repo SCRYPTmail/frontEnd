@@ -118,9 +118,9 @@ define([
                                             }, 1000); //just to give notice somethig is going on
 
 
-                                            var time=15000;
+                                            var time=30000;
                                             if(app.mailMan.get('makeItFaster')){
-                                                time=5000;
+                                                time=25000;
                                             }
                                             app.mailMan.set({'makeItFaster':false});
                                             var schedule=setTimeout(function () {
