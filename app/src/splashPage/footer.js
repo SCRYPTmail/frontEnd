@@ -28,7 +28,7 @@ define(['react'], function (React) {
 		render: function () {
 
 			return	<footer className="footer grey-bg">
-			© &nbsp;2016 SCRYPTMail
+			© &nbsp;2017 SCRYPTMail
 
 				<ul className="footer-links small-text">
 					<li><a onClick={this.handleClick.bind(this, 'terms')} className="dark-text">Terms</a>

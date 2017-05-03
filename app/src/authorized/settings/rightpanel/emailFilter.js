@@ -40,6 +40,7 @@ define(['react','app'], function (React,app) {
 				secondPanelText:"Add New Rule",
 
 				button1class:'btn btn-primary pull-right',
+                button2class:'btn btn-warning pull-right margin-right-10',
 
 
 				inputNameClass:"form-group col-xs-12 col-sm-6 col-lg-7",
@@ -220,6 +221,7 @@ define(['react','app'], function (React,app) {
 							secondTab:"",
 
 							button1class:'btn btn-primary pull-right',
+                            button2class:'btn btn-warning pull-right margin-right-10',
 
 							secondPanelText:"Add New Rule",
 
@@ -248,6 +250,26 @@ define(['react','app'], function (React,app) {
 
 					break;
 
+                case 'clearFilterRules':
+                    app.user.set({"filter":{}});
+                    var thisComp=this;
+
+                    app.userObjects.updateObjects('saveFilter','',function(result){
+                        if(result=='saved'){
+                            thisComp.setState({filterSet:thisComp.getFilter()});
+                            thisComp.handleClick("showFirst");
+                            app.notifications.systemMessage('saved');
+
+                        }else if(result=='newerFound'){
+                            app.notifications.systemMessage('newerFnd');
+                        }else if(result=='nothingUpdt'){
+                            app.notifications.systemMessage('nthTochngORexst');
+                        }
+
+
+                    });
+
+                    break;
 				case 'addFilterRule':
 					var thisComp=this;
 					app.globalF.checkPlanLimits('filter',Object.keys(app.user.get('filter')).length,function(result){
@@ -264,7 +286,8 @@ define(['react','app'], function (React,app) {
 									deleteButtonClass:"hidden",
 									saveButtonText:"Add",
 
-									button1class:'hidden'
+									button1class:'hidden',
+                                    button2class:'hidden',
 
 								});
 							}
@@ -330,6 +353,7 @@ define(['react','app'], function (React,app) {
 						secondPanelText:"Edit Rule",
 
 						button1class:'hidden',
+                        button2class:'hidden',
 						deleteButtonClass:"",
 						saveButtonText:"Save",
 
@@ -411,6 +435,7 @@ define(['react','app'], function (React,app) {
 						<div className="panel-heading">
 
 							<button type="button" className={this.state.button1class} onClick={this.handleClick.bind(this, 'addFilterRule')}> Add Rule</button>
+                            <button type="button" className={this.state.button2class} onClick={this.handleClick.bind(this, 'clearFilterRules')}> Remove All Rules</button>
 
 							<ul className="nav nav-tabs tabbed-nav">
 								<li role="presentation" className={this.state.firstTab}>

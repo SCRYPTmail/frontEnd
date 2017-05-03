@@ -376,7 +376,7 @@ define(['react','app'], function (React,app) {
 
                                 <div className="clearfix"></div>
                                 <div className={"form-group text-left "+ (this.state.oneStep?"":"hidden")}>
-                                   Because you are using single password for login and encrypting your emails. Resetting your password will permanently delete all your existing emails and contacts unavailable.<br/> Proceed with caution.
+                                   Because you are using single password for login and encrypting your emails. Resetting your password will permanently delete all your existing emails and contacts.<br/> Proceed with caution.
                                 </div>
 
                                 <div className={"form-group "+(this.state.secretError!=""?"has-error":"")+ (this.state.oneStep?"hidden":"")}>
