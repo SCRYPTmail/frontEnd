@@ -2443,8 +2443,6 @@ define([
 		},
 		createFilterRule: function (id, from, match, folder, text, callback) {
 
-			console.log(id, from, match, folder, text);
-
 			var filter = app.user.get("filter");
 
 			if (id === "") {

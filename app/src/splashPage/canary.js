@@ -25,7 +25,7 @@ define(['react'], function (React) {
 						<div className="colored-line"></div>
                         {this.state.noRequestTime}
                         <br/>
-                        Updated Feb 19, 2017
+                        Updated May 03, 2017
 					</div>
 					A <a href="https://en.wikipedia.org/wiki/Warrant_canary" target="_blank">warrant canary</a> is a method by which a communications service provider informs its users that the provider has not been served with a secret subpoena.
 
@@ -34,10 +34,10 @@ define(['react'], function (React) {
 
 						<p>SCRYPTmail has received a total of
 							<ul>
-								<li>1 request to access user data</li>
+								<li>5 request to access user data</li>
 								<li>0 requests were granted</li>
-                                <li>We had 4 request from law enforcement agencies to access log file for the specific time for certain users</li>
-                                <li>4 requests for access time and IP were granted</li>
+                                <li>We had 8 request from law enforcement agencies to access log file for the specific time for certain users</li>
+                                <li>8 requests for access time and IP were granted</li>
 							</ul>
 						</p>
 						<br/>
