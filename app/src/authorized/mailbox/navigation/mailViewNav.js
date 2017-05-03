@@ -104,7 +104,7 @@ define(['react','app','accounting'], function (React,app,accounting) {
 
 
                         if(selected.length>0){
-                            console.log(selected);
+                            //console.log(selected);
                            //delete email physically;
                             app.user.set({"currentMessageView":{}});
 
@@ -172,7 +172,7 @@ define(['react','app','accounting'], function (React,app,accounting) {
 
 					break;
 				case 'moveToSpam':
-                    console.log('move to spam');
+                   // console.log('move to spam');
 
                     var thisComp=this;
 
@@ -298,7 +298,7 @@ define(['react','app','accounting'], function (React,app,accounting) {
 
 		change: function(event){
 
-		console.log(event.target.value);
+		//console.log(event.target.value);
 			$('#emailListTable').DataTable().column( 0 ).search(
 				event.target.value,
 				0,
@@ -345,7 +345,7 @@ define(['react','app','accounting'], function (React,app,accounting) {
 		},
 
         checkPastDue:function(){
-            console.log(app.user.get('pastDue'));
+           // console.log(app.user.get('pastDue'));
             this.setState({
                 pastDue:app.user.get('pastDue'),
                 balanceShort:app.user.get('balanceShort')
