@@ -401,7 +401,6 @@ define([
                             userObj[index]['data']={};
                         }
 
-                        console.log(userObj[index]['data']);
                         userObj[index]['hash']=value['hash'];
                         userObj[index]['index']=value['index'];
                         userObj[index]['nonce']=value['nonce'];

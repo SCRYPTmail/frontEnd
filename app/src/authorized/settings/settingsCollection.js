@@ -22,7 +22,8 @@ define(['react','app',
 					folders:'',
 					security:'',
 					plan:'',
-					delete:''
+					delete:'',
+                    blackList:''
 				},
 				setTabs:{
 					Header:"panel-title personal-info-title hidden-xs",
@@ -126,6 +127,11 @@ define(['react','app',
 					case 'Filter':
 						this.setState({settings:{spam:'active'}});
 						break;
+                    case 'BlackList':
+                        this.setState({settings:{blackList:'active'}});
+                        break;
+
+
 					case 'Folders':
 						this.setState({settings:{folders:'active'}});
 						break;
