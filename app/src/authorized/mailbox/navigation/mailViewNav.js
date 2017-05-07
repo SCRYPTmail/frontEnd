@@ -7,6 +7,7 @@ define(['react','app','accounting'], function (React,app,accounting) {
                 checkNewMails:false,
                 trashStatus:false,
                 spamStatus:false,
+                blackList:false,
                 pastDue:false,
                 balanceShort:false
 
@@ -171,6 +172,90 @@ define(['react','app','accounting'], function (React,app,accounting) {
 					}
 
 					break;
+
+                case 'blackList':
+                    var thisComp=this;
+
+                    console.log('blacklisting');
+                    thisComp.setState({
+                        blackList:true
+                    });
+
+                    var target={};
+
+                    if($(event.target).is('i')){
+                        target=$(event.target)
+                    }else{
+                        target=$(event.target).find('i')
+                    }
+                    target.removeClass('fa-stop').addClass('fa-refresh fa-spin');
+
+                    console.log(app.user.get("systemFolders"));
+                    var destFolderId=app.user.get("systemFolders")['trashFolderId'];
+                    var selected=this.getSelected();
+
+
+                    if(selected.length>0){
+                        var emailpromises=[];
+
+                        app.user.set({"currentMessageView":{}});
+
+                        app.globalF.move2Folder(destFolderId,selected,function(){
+                            app.userObjects.updateObjects('folderUpdate','',function(result){
+
+                                $.each(selected, function( index, emailId ) {
+                                    var emailMetaPromise = $.Deferred();
+
+                                    var email=app.globalF.getEmailsFromString(app.transform.from64str(app.user.get('emails')['messages'][emailId]['fr']).toLowerCase());
+                                    console.log(email);
+
+                                    var post={
+                                        'ruleId':  '',
+                                        'matchField':'emailM',
+                                        'text':email,
+                                        'destination':0
+                                    };
+
+                                    app.serverCall.ajaxRequest('saveBlockedEmails', post, function (result) {
+                                        if (result['response'] == "success") {
+                                            emailMetaPromise.resolve();
+                                        }
+                                    });
+
+                                    emailpromises.push(emailMetaPromise);
+                                });
+
+                                Promise.all(emailpromises).then(function() {
+                                    app.notifications.systemMessage('saved');
+                                    $('#selectAll>input').prop("checked",false);
+                                    app.user.set({"resetSelectedItems":true});
+                                    app.globalF.syncUpdates();
+                                    app.layout.display('viewBox');
+
+                                    target.removeClass('fa-spin fa-refresh').addClass('fa-stop');
+
+                                    thisComp.setState({
+                                        blackList:false
+                                    });
+
+                                });
+
+
+                            });
+                        });
+
+                    }else{
+                        app.notifications.systemMessage('selectMsg');
+                        target.removeClass('fa-spin fa-refresh').addClass('fa-stop');
+
+                        thisComp.setState({
+                            blackList:false
+                        });
+                    }
+
+
+                    break;
+
 				case 'moveToSpam':
                    // console.log('move to spam');
 
@@ -492,6 +577,13 @@ define(['react','app','accounting'], function (React,app,accounting) {
                                         onClick={this.handleChange.bind(this, 'moveToSpam')}>
 									<i className="fa fa-ban fa-lg"></i>
 								</button>
+
+                                <button className="btn btn-default" data-placement="bottom" data-toggle="popover-hover"  title="" data-content="Blacklist Sender" type="button"
+                                        disabled={this.state.blackList}
+                                        onClick={this.handleChange.bind(this, 'blackList')}>
+                                    <i className="fa fa-stop fa-lg txt-color-red"></i>
+                                </button>
+
 
 
 								<div className="btn-group boxEmailOption" >

@@ -124,6 +124,24 @@ define([
 					var url='/getTrustedSendersV2';
 					break;
 
+                case 'getBlockedEmails':
+                    var url='/getBlockedEmailsV2';
+                    break;
+                case 'saveBlockedEmails':
+                    var url='/saveBlockedEmailsV2';
+                    break;
+
+                case 'deleteBlockedEmails':
+                    var url='/deleteBlockedEmailsV2';
+                    break;
+
+                case 'deleteAllBlockedEmails':
+                    var url='/deleteAllBlockedEmailsV2';
+                    break;
+
+
+
+
 
 				/*case 'getPublicKeys':
 					//get public key of emails

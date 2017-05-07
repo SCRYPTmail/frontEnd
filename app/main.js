@@ -162,7 +162,7 @@ require.config({
 		 }
 		 */
 	},
-    urlArgs:"bust=" +  54
+    urlArgs:"bust=" +  55
 });
 
 require(['app', 'cmpld/router',

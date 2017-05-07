@@ -20,7 +20,7 @@ define([
 			this.set({"password": ''});      //pass for login
 			this.set({"secondPassword": ''});  //pas to encrypt data
 			this.set({"defaultPGPKeybit": ''});
-            this.set({"currentVersion": 934});
+            this.set({"currentVersion": 935});
             this.set({"pleaseUpdate": false});
 
             this.set({"balanceShort": false});

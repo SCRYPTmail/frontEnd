@@ -62,6 +62,11 @@ define(['react','app'], function (React,app) {
 							trigger : true
 						});
 						break;
+                    case 'BlackList':
+                        Backbone.history.navigate("/settings/Black-List", {
+                            trigger : true
+                        });
+                        break;
 					case 'Folders':
 						Backbone.history.navigate("/settings/Folders", {
 							trigger : true
@@ -138,6 +143,8 @@ define(['react','app'], function (React,app) {
 
 					<li className={this.props.activeLink.spam}>
 						<a className="list-link js-nav" onClick={this.handleClick.bind(this, 'Filter')}>Email Filter <i className="fa fa-chevron-right"></i></a></li>
+                    <li className={this.props.activeLink.blackList}>
+                        <a className="list-link js-nav" onClick={this.handleClick.bind(this, 'BlackList')}>Black / White List <i className="fa fa-chevron-right"></i></a></li>
 
 					{/*<li className={this.props.activeLink.security}>
 						<a className="list-link js-nav" onClick={this.handleClick.bind(this, 'Security-Log')}>Security Log<i className="fa fa-chevron-right"></i></a></li>*/}

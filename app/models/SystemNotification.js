@@ -36,7 +36,7 @@ define([
 					break;
 
 				case 'selectMsg':
-					this.noAnswer('Please Select at least one message'); //
+					this.noAnswer('Please select at least one message'); //
 					break;
 
 				case 'rchdLimits':
