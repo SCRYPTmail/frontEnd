@@ -176,6 +176,12 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 					break;
 
 				case 'cancelEdit':
+                    var thisComp=this;
+                    thisComp.setState({
+                        planSelector: thisComp.state.currentPlan,
+                    },function(){
+                        thisComp.calculateNewPrice();
+                    });
 
 					this.handleClick('showFirst');
 
