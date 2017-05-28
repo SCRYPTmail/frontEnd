@@ -24,6 +24,7 @@ define([
             this.set({"pleaseUpdate": false});
 
             this.set({"balanceShort": false});
+            this.set({"folderCached": {}});
 
 
             this.set({"rememberContacts": true});

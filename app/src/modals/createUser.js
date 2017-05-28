@@ -235,7 +235,6 @@ define(['app', 'react'], function (app, React) {
 
                     app.generate.generateUserObjects(email, pass, secret, folderKey, salt)
                         .then(function (userObj) {
-                            console.log('ddd');
 
                             userObj['newPass']=pass;
                             userObj['salt']=app.transform.bin2hex(salt);
