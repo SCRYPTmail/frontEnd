@@ -8,7 +8,7 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 				dataSet:dataSet,
                 mainChecker:[],
                 emailInFolder:0,
-                displayedFolder:""
+                displayedFolder:"",
 			};
 		},
 
@@ -29,11 +29,16 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
             var thisComp = this;
             var emails = app.user.get('emails')['folders'][folderId];
 
-            if (thisComp.state.emailInFolder == Object.keys(emails).length && thisComp.state.displayedFolder == app.transform.from64str(app.user.get('folders')[folderId]['name'])) {
+           // if (thisComp.state.emailInFolder == Object.keys(emails).length && thisComp.state.displayedFolder == app.transform.from64str(app.user.get('folders')[folderId]['name'])) {
 
-            } else {
+            //} else {
 
-            console.log('real update');
+            var emailListCopy=app.user.get("folderCached");
+
+            if(emailListCopy[folderId]===undefined){
+                emailListCopy[folderId]={};
+            }
+
             thisComp.setState({
                 "displayedFolder": app.transform.from64str(app.user.get('folders')[folderId]['name']),
                 "emailInFolder": Object.keys(emails).length
@@ -59,222 +64,260 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
             var encrypted2 = "";
 
             $.each(emails, function (index, folderData) {
+                if(emailListCopy[folderId][index]!==undefined){
+                    var unread = folderData['st'] == 0 ? "unread" : folderData['st'] == 1 ? "fa fa-mail-reply" : folderData['st'] == 2 ? "fa fa-mail-forward" : "";
 
-                var time = folderData['tr'] != undefined ? folderData['tr'] : folderData['tc'] != undefined ? folderData['tc'] : '';
+                    var row = {
+                        "DT_RowId": index,
+                        "email": {
+                            "display": '<div class="email no-padding ' +  unread + '">' +
+                            emailListCopy[folderId][index]["checkBpart"] +
+                            emailListCopy[folderId][index]["dateAtPart"] +
+                            emailListCopy[folderId][index]["fromPart"] +
 
-                //console.log(time);
-                if (d.toDateString() == new Date(parseInt(time + '000')).toDateString()) {
-                    var dispTime = new Date(parseInt(time + '000')).toLocaleTimeString();
-                } else {
-                    var dispTime = new Date(parseInt(time + '000')).toLocaleDateString();
-                }
-                var fromEmail = [];
-                var fromTitle = [];
-                var recipient = [];
-                var recipientTitle = [];
-                var trust = "";
-                if (folderData['to'].length > 0) {
+                            '<div class="title ellipsisText col-xs-10 col-md-6"><span>' + emailListCopy[folderId][index]["sb"] + '</span> - ' + emailListCopy[folderId][index]["bd"] + '</div>' +emailListCopy[folderId][index]["tagPart"]  +
+                            '</div>',
 
 
-                    $.each(folderData['to'], function (index, email) {
-                        // console.log(email);
-
-                        if (app.transform.check64str(email)) {
-                            var str = app.transform.from64str(email);
-                        } else {
-                            var str = email;
+                            //"open":folderData['o']?1:0,
+                            "timestamp": emailListCopy[folderId][index]["timestamp"]
                         }
+                    };
+                }else
+                {
+                    var time = folderData['tr'] != undefined ? folderData['tr'] : folderData['tc'] != undefined ? folderData['tc'] : '';
 
-                        recipient.push(app.globalF.parseEmail(str)['name']);
-                        recipientTitle.push(app.globalF.parseEmail(str)['email']);
-
-                    });
-
-                } else if (Object.keys(folderData['to']).length > 0) {
-
-
-                    $.each(folderData['to'], function (index, email) {
-
-                        try {
-                            var str = app.transform.from64str(index);
-
-                            var name = "";
-                            if (email === undefined) {
-                                name = str;
-                            } else {
-                                if (email['name'] === undefined) {
-                                    name = str;
-                                } else {
-                                    if (email['name'] === "") {
-                                        name = str;
-                                    } else {
-                                        name = app.transform.from64str(email['name']);
-                                    }
-
-                                }
-                            }
-
-                            recipient.push(name);
-                            recipientTitle.push(str);
-                        } catch (err) {
-                            recipient.push('error');
-                            recipientTitle.push('error');
-                        }
-
-                    });
-
-                }
-                //console.log(recipient);
-
-                if (t == 'Sent' || t == 'Draft') {
-
-                    //  console.log(folderData['to']);
-                    //  console.log(folderData['cc']);
-                    //  console.log(folderData['bcc']);
-                    fromEmail = '';
-                    fromTitle = '';
-
-                    if (folderData['cc'] != undefined && Object.keys(folderData['cc']).length > 0) {
-
-                        $.each(folderData['cc'], function (index, email) {
-                            try {
-                                var str = app.transform.from64str(index);
-                                var name = "";
-                                if (email === undefined) {
-                                    name = str;
-                                } else {
-                                    if (email['name'] === undefined) {
-                                        name = str;
-                                    } else {
-                                        if (email['name'] === "") {
-                                            name = str;
-                                        } else {
-                                            name = app.transform.from64str(email['name']);
-                                        }
-                                    }
-                                }
-                                recipient.push(name);
-                                recipientTitle.push(str);
-                            } catch (err) {
-                                recipient.push('error');
-                                recipientTitle.push('error');
-                            }
-
-                        });
-
-                    }
-
-                    if (folderData['bcc'] != undefined && Object.keys(folderData['bcc']).length > 0) {
-
-                        $.each(folderData['bcc'], function (index, email) {
-                            try {
-                                var str = app.transform.from64str(index);
-                                var name = "";
-                                if (email === undefined) {
-                                    name = str;
-                                } else {
-                                    if (email['name'] === undefined) {
-                                        name = str;
-                                    } else {
-                                        if (email['name'] === "") {
-                                            name = str;
-                                        } else {
-                                            name = app.transform.from64str(email['name']);
-                                        }
-                                    }
-                                }
-                                recipient.push(name);
-                                recipientTitle.push(str);
-                            } catch (err) {
-                                recipient.push('error');
-                                recipientTitle.push('error');
-                            }
-
-                        });
-
-                    }
-
-                    recipient = recipient.join(', ');
-                    recipientTitle = recipientTitle.join(', ');
-
-                    fromEmail = recipient;
-                    fromTitle = recipientTitle;
-
-                } else {
-
-                    var str = app.transform.from64str(folderData['fr']);
-
-                    //console.log(str);
-                    fromEmail = app.globalF.parseEmail(str, true)['name'];
-                    fromTitle = app.globalF.parseEmail(str, true)['email'];
-
-                    if (trusted.indexOf(app.transform.SHA256(app.globalF.parseEmail(str)['email'])) !== -1) {
-                        //console.log('X');
-                        trust = "<img src='/img/logo/logo.png' style='height:25px'/>"
+                    //console.log(time);
+                    if (d.toDateString() == new Date(parseInt(time + '000')).toDateString()) {
+                        var dispTime = new Date(parseInt(time + '000')).toLocaleTimeString();
                     } else {
-                        trust = ""
+                        var dispTime = new Date(parseInt(time + '000')).toLocaleDateString();
                     }
-                    recipient = recipient.join(', ');
-                    recipientTitle = recipientTitle.join(', ');
-
-                }
-
-
-                if (folderData['tg'].length > 0) {
-                    //console.log(folderData['tg']);
-                    var tag = folderData['tg'][0]['name'];
-
-                } else {
-                    var tag = "";
-                }
+                    var fromEmail = [];
+                    var fromTitle = [];
+                    var recipient = [];
+                    var recipientTitle = [];
+                    var trust = "";
+                    if (folderData['to'].length > 0) {
 
 
-                if (parseInt(folderData['en']) == 1) {
-                    encrypted2 = "<i class='fa fa-lock fa-lg'></i>";
-                } else if (parseInt(folderData['en']) == 0) {
-                    encrypted2 = "<i class='fa fa-unlock fa-lg'></i>";
-                } else if (parseInt(folderData['en']) == 3) {
-                    encrypted2 = "";
-                }
+                        $.each(folderData['to'], function (indexTo, email) {
+                            // console.log(email);
 
-                //console.log(tag);
-                tag = app.globalF.stripHTML(app.transform.from64str(tag));
-                //console.log(app.transform.from64str(tag));
-                var unread = folderData['st'] == 0 ? "unread" : folderData['st'] == 1 ? "fa fa-mail-reply" : folderData['st'] == 2 ? "fa fa-mail-forward" : "";
+                            if (app.transform.check64str(email)) {
+                                var str = app.transform.from64str(email);
+                            } else {
+                                var str = email;
+                            }
 
-                var attch = folderData['at'] == "1" ? '<span class="fa fa-paperclip fa-lg"></span>' : "";
+                            recipient.push(app.globalF.parseEmail(str)['name']);
+                            recipientTitle.push(app.globalF.parseEmail(str)['email']);
 
-                if (fromEmail == "") {
-                    fromEmail = fromTitle;
-                }
+                        });
+
+                    } else if (Object.keys(folderData['to']).length > 0) {
 
 
-                var checkBpart = '<label><input class="emailchk hidden-xs" type="checkbox"/></label>';
+                        $.each(folderData['to'], function (indexTo, email) {
 
-                var fromPart = '<span class="from no-padding col-xs-8 col-md-3 ellipsisText margin-right-10" data-placement="bottom" data-toggle="popover-hover" title="" data-content="' + fromTitle + '">' + trust + ' ' + fromEmail + '</span>';
+                            try {
+                                var str = app.transform.from64str(indexTo);
 
-                var dateAtPart = '<span class="no-padding date col-xs-3 col-sm-2">' + attch + '&nbsp;' + encrypted2 + ' ' + dispTime + '<span class="label label-primary f-s-10"></span><span class="label label-primary f-s-10"></span></span>';
+                                var name = "";
+                                if (email === undefined) {
+                                    name = str;
+                                } else {
+                                    if (email['name'] === undefined) {
+                                        name = str;
+                                    } else {
+                                        if (email['name'] === "") {
+                                            name = str;
+                                        } else {
+                                            name = app.transform.from64str(email['name']);
+                                        }
 
-                var tagPart = '<div class="mailListLabel pull-right text-right col-xs-2"><div class="ellipsisText visible-xs"><span class="label label-success">' + tag + '</span></div><div class="ellipsisText hidden-xs col-xs-12 pull-right"><span class="label label-success">' + tag + '</span></div></div>';
+                                    }
+                                }
 
-                var row = {
-                    "DT_RowId": index,
-                    "email": {
-                        "display": '<div class="email no-padding ' + unread + '">' +
-                        checkBpart +
-                        dateAtPart +
-                        fromPart +
+                                recipient.push(name);
+                                recipientTitle.push(str);
+                            } catch (err) {
+                                recipient.push('error');
+                                recipientTitle.push('error');
+                            }
 
-                        '<div class="title ellipsisText col-xs-10 col-md-6"><span>' + app.transform.escapeTags(app.transform.from64str(folderData['sb'])) + '</span> - ' + app.transform.escapeTags(app.transform.from64str(folderData['bd'])) + '</div>' + tagPart +
-                        '</div>',
+                        });
+
+                    }
+                    //console.log(recipient);
+
+                    if (t == 'Sent' || t == 'Draft') {
+
+                        //  console.log(folderData['to']);
+                        //  console.log(folderData['cc']);
+                        //  console.log(folderData['bcc']);
+                        fromEmail = '';
+                        fromTitle = '';
+
+                        if (folderData['cc'] != undefined && Object.keys(folderData['cc']).length > 0) {
+
+                            $.each(folderData['cc'], function (indexCC, email) {
+                                try {
+                                    var str = app.transform.from64str(indexCC);
+                                    var name = "";
+                                    if (email === undefined) {
+                                        name = str;
+                                    } else {
+                                        if (email['name'] === undefined) {
+                                            name = str;
+                                        } else {
+                                            if (email['name'] === "") {
+                                                name = str;
+                                            } else {
+                                                name = app.transform.from64str(email['name']);
+                                            }
+                                        }
+                                    }
+                                    recipient.push(name);
+                                    recipientTitle.push(str);
+                                } catch (err) {
+                                    recipient.push('error');
+                                    recipientTitle.push('error');
+                                }
+
+                            });
+
+                        }
+
+                        if (folderData['bcc'] != undefined && Object.keys(folderData['bcc']).length > 0) {
+
+                            $.each(folderData['bcc'], function (indexBCC, email) {
+                                try {
+                                    var str = app.transform.from64str(indexBCC);
+                                    var name = "";
+                                    if (email === undefined) {
+                                        name = str;
+                                    } else {
+                                        if (email['name'] === undefined) {
+                                            name = str;
+                                        } else {
+                                            if (email['name'] === "") {
+                                                name = str;
+                                            } else {
+                                                name = app.transform.from64str(email['name']);
+                                            }
+                                        }
+                                    }
+                                    recipient.push(name);
+                                    recipientTitle.push(str);
+                                } catch (err) {
+                                    recipient.push('error');
+                                    recipientTitle.push('error');
+                                }
+
+                            });
+
+                        }
+
+                        recipient = recipient.join(', ');
+                        recipientTitle = recipientTitle.join(', ');
+
+                        fromEmail = recipient;
+                        fromTitle = recipientTitle;
+
+                    } else {
+
+                        var str = app.transform.from64str(folderData['fr']);
+
+                        //console.log(str);
+                        fromEmail = app.globalF.parseEmail(str, true)['name'];
+                        fromTitle = app.globalF.parseEmail(str, true)['email'];
+
+                        if (trusted.indexOf(app.transform.SHA256(app.globalF.parseEmail(str)['email'])) !== -1) {
+                            //console.log('X');
+                            trust = "<img src='/img/logo/logo.png' style='height:25px'/>"
+                        } else {
+                            trust = ""
+                        }
+                        recipient = recipient.join(', ');
+                        recipientTitle = recipientTitle.join(', ');
+
+                    }
 
 
-                        //"open":folderData['o']?1:0,
+                    if (folderData['tg'].length > 0) {
+                        //console.log(folderData['tg']);
+                        var tag = folderData['tg'][0]['name'];
+
+                    } else {
+                        var tag = "";
+                    }
+
+
+                    if (parseInt(folderData['en']) == 1) {
+                        encrypted2 = "<i class='fa fa-lock fa-lg'></i>";
+                    } else if (parseInt(folderData['en']) == 0) {
+                        encrypted2 = "<i class='fa fa-unlock fa-lg'></i>";
+                    } else if (parseInt(folderData['en']) == 3) {
+                        encrypted2 = "";
+                    }
+
+                    //console.log(tag);
+                    tag = app.globalF.stripHTML(app.transform.from64str(tag));
+                    //console.log(app.transform.from64str(tag));
+                    var unread = folderData['st'] == 0 ? "unread" : folderData['st'] == 1 ? "fa fa-mail-reply" : folderData['st'] == 2 ? "fa fa-mail-forward" : "";
+
+                    var attch = folderData['at'] == "1" ? '<span class="fa fa-paperclip fa-lg"></span>' : "";
+
+                    if (fromEmail == "") {
+                        fromEmail = fromTitle;
+                    }
+
+
+                    var checkBpart = '<label><input class="emailchk hidden-xs" type="checkbox"/></label>';
+
+                    var fromPart = '<span class="from no-padding col-xs-8 col-md-3 ellipsisText margin-right-10" data-placement="bottom" data-toggle="popover-hover" title="" data-content="' + fromTitle + '">' + trust + ' ' + fromEmail + '</span>';
+
+                    var dateAtPart = '<span class="no-padding date col-xs-3 col-sm-2">' + attch + '&nbsp;' + encrypted2 + ' ' + dispTime + '<span class="label label-primary f-s-10"></span><span class="label label-primary f-s-10"></span></span>';
+
+                    var tagPart = '<div class="mailListLabel pull-right text-right col-xs-2"><div class="ellipsisText visible-xs"><span class="label label-success">' + tag + '</span></div><div class="ellipsisText hidden-xs col-xs-12 pull-right"><span class="label label-success">' + tag + '</span></div></div>';
+
+
+                    emailListCopy[folderId][index]={
+                        "DT_RowId": index,
+                        "unread":unread,
+                        "checkBpart":checkBpart,
+                        "dateAtPart":dateAtPart,
+                        "fromPart":fromPart,
+                        "sb":app.transform.escapeTags(app.transform.from64str(folderData['sb'])),
+                        "bd":app.transform.escapeTags(app.transform.from64str(folderData['bd'])),
+                        "tagPart":tagPart,
                         "timestamp": time
-                    }
-                };
+                    };
+
+                    var row = {
+                        "DT_RowId": index,
+                        "email": {
+                            "display": '<div class="email no-padding ' +  emailListCopy[folderId][index]["unread"] + '">' +
+                            emailListCopy[folderId][index]["checkBpart"] +
+                            emailListCopy[folderId][index]["dateAtPart"] +
+                            emailListCopy[folderId][index]["fromPart"] +
+
+                            '<div class="title ellipsisText col-xs-10 col-md-6"><span>' + emailListCopy[folderId][index]["sb"] + '</span> - ' + emailListCopy[folderId][index]["bd"] + '</div>' +emailListCopy[folderId][index]["tagPart"]  +
+                            '</div>',
+
+
+                            //"open":folderData['o']?1:0,
+                            "timestamp": emailListCopy[folderId][index]["timestamp"]
+                        }
+                    };
+
+                }
+
                 data.push(row);
             });
+
+            app.user.set({"folderCached":emailListCopy});
 
             //	console.log(data);
 
@@ -302,7 +345,7 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
                 //   console.log(selectedEmails);
             });
 
-        }
+        //}
         },
 
 		componentDidMount: function() {

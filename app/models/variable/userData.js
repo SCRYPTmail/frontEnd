@@ -20,10 +20,11 @@ define([
 			this.set({"password": ''});      //pass for login
 			this.set({"secondPassword": ''});  //pas to encrypt data
 			this.set({"defaultPGPKeybit": ''});
-            this.set({"currentVersion": 935});
+            this.set({"currentVersion": 936});
             this.set({"pleaseUpdate": false});
 
             this.set({"balanceShort": false});
+            this.set({"folderCached": {}});
 
 
             this.set({"rememberContacts": true});

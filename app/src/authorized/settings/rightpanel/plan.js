@@ -24,20 +24,47 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 
 
 				boxSize: 0,
-				cDomain: 0,
-				aliases: 0,
-				dispEmails:0,
+                newboxSize:0,
 
+                cDomain: 0,
+                newcDomain:0,
+
+                aliases: 0,
+                newaliases:0,
+
+				dispEmails:0,
+                newdispEmails:0,
+
+                newpgpStrength:0,
 				pgpStrength: 0,
-				attSize: 0,
+
+                attSize: 0,
+                newattSize:0,
+
 				importPGP: 0,
+                newimportPGP:0,
+
 				contacts: 0,
+                newcontacts: 0,
+
 				delaySend: 0,
+                newdelaySend: 0,
+
 				sendLimits: 0,
+                newsendLimits: 0,
+
                 recipPerMail:0,
+                newrecipPerMail:0,
+
 				folderExpiration: 0,
+                newfolderExpiration: 0,
+
 				secLog: 0,
+                newsecLog: 0,
+
 				filtEmail: 0,
+                newfiltEmail: 0,
+
 				currentServiceCost:0,
 
 				paidThisMonth:0,
@@ -51,7 +78,10 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 
 				bitcoinPay:"hidden",
 				paypalPay:"hidden",
-				monthChargeClass:"hidden"
+				monthChargeClass:"hidden",
+                planSelector:1,
+                paymentVersion:0,
+                currentPlan:0
 
 
 
@@ -164,7 +194,7 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 							}else if(result['response'] == "fail" && result['data']=="insBal"){
 
 								$('#infoModHead').html("Insufficient Funds");
-								$('#infoModBody').html("You are over your available balance by: $"+result['need']+" <br/>Please add more funds to your available balance or remove some unnecessary features.");
+								$('#infoModBody').html("You are over your available balance by: <b>$"+result['need']+"</b> <br/>Please add more funds or select different plan.");
 								$('#infoModal').modal('show');
 
 							}else if(result['response'] == "fail" && result['data']=="failToSave"){
@@ -182,22 +212,8 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 		getPlansDataPost: function(){
 
 			var post={
-				userId:app.user.get('userId'),
-				aliases:this.state.aliases,
-				boxSize: this.state.boxSize,
-				cDomain: this.state.cDomain,
-				dispEmails: this.state.dispEmails,
-				pgpStrength: this.state.pgpStrength,
-				attSize: this.state.attSize,
-				importPGP: this.state.importPGP,
-				contacts: this.state.contacts,
-				delaySend: this.state.delaySend,
-				sendLimits: this.state.sendLimits,
-                recipPerMail:this.state.recipPerMail,
-				folderExpiration: this.state.folderExpiration,
-				secLog: this.state.secLog,
-				filtEmail: this.state.filtEmail,
-
+				'userId':app.user.get('userId'),
+                'planSelector':this.state.planSelector
 			}
 			return post;
 		},
@@ -205,117 +221,23 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 		handleChange: function (i, event) {
 			var thisComp=this;
 			switch (i) {
+                case "changeBoxSize":
 
-				case 'changeBoxSize':
+                    if(thisComp.state.currentPlan!==77 && event.target.value==77){
+                        $('#infoModHead').html("Need More Features?");
+                        $('#infoModBody').html("If you need more features than our existing plans can offer, please contact: <b>support@scryptmail.com</b>, put 'Custom Plan Request' in subject line and we will be happy to discuss our custom pricing options.<br/> Thank you");
+                        $('#infoModal').modal('show');
 
-					switch (event.target.id) {
-						case 'sBoxSize':
-							this.setState({
-								boxSize: event.target.value
-							});
-							$("#boxSize").slider("value", event.target.selectedIndex + 1);
-							break;
-
-						case 'sCustDomain':
-							this.setState({
-								cDomain: event.target.value
-							});
-							$("#cDomain").slider("value", event.target.selectedIndex + 1);
-							break;
-
-						case 'sEmailAlias':
-							this.setState({
-								aliases: event.target.value
-							});
-							$("#aliases").slider("value", event.target.selectedIndex + 1);
-							break;
-
-						case 'sPgpStrength':
-							this.setState({
-								pgpStrength: event.target.value
-							});
-							$("#pgpStrength").slider("value", event.target.selectedIndex + 1);
-							break;
-
-						case 'sAttSize':
-							this.setState({
-								attSize: event.target.value
-							});
-							$("#attSize").slider("value", event.target.selectedIndex + 1);
-							break;
-
-						case 'sDispEmails':
-							this.setState({
-								dispEmails: event.target.value
-							});
-							$("#dispEmails").slider("value", event.target.selectedIndex + 1);
-							break;
-
-						case 'sImportPGP':
-							this.setState({
-								importPGP: event.target.value
-							});
-							$("#importPGP").slider("value", event.target.selectedIndex + 1);
-							break;
-
-						case 'sContacts':
-							this.setState({
-								contacts: event.target.value
-							});
-							$("#contacts").slider("value", event.target.selectedIndex + 1);
-							break;
+                    }else{
+                        thisComp.setState({
+                            planSelector: event.target.value,
+                        },function(){
+                            this.calculateNewPrice();
+                        });
+                    }
 
 
-						case 'sDelaySend':
-							this.setState({
-								delaySend: event.target.value
-							});
-							$("#delaySend").slider("value", event.target.selectedIndex + 1);
-							break;
-
-						case 'sSendLimits':
-							this.setState({
-								sendLimits: event.target.value
-							});
-							$("#sendLimits").slider("value", event.target.selectedIndex + 1);
-							break;
-
-                        case 'sRecipPerMail':
-                            this.setState({
-                                recipPerMail: event.target.value
-                            });
-                            $("#recipPerMail").slider("value", event.target.selectedIndex + 1);
-                            break;
-
-
-
-						case 'sFolderExpiration':
-							this.setState({
-								folderExpiration: event.target.value
-							});
-							$("#folderExpiration").slider("value", event.target.selectedIndex + 1);
-							break;
-
-
-						case 'sSecLog':
-							this.setState({
-								secLog: event.target.value
-							});
-							$("#secLog").slider("value", event.target.selectedIndex + 1);
-							break;
-
-
-						case 'sFiltEmail':
-							this.setState({
-								filtEmail: event.target.value
-							});
-							$("#filtEmail").slider("value", event.target.selectedIndex + 1);
-							break;
-
-
-					}
-
-					break;
+                    break;
 
 				case "changePayment":
 					var targVal=event.target.value;
@@ -386,11 +308,26 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 
 					var paid =thisComp.state.paidThisMonth;
 					var outstanding=result['data']['currentCost']-paid;
-
+                    var newPlan=result['data']['plan'];
 					thisComp.setState({
 						outstandingBalance:outstanding>0?outstanding:0,
 						monthlyCharge:result['data']['monthlyCharge'],
 						currentServiceCost:result['data']['currentCost'],
+                        newboxSize:newPlan['bSize'],
+                        newcDomain:newPlan['cDomain'],
+                        newaliases:newPlan['alias'],
+                        newpgpStrength:newPlan['pgpStr'],
+                        newattSize:newPlan['attSize'],
+                        newdispEmails:newPlan['dispos'],
+
+                        newimportPGP:newPlan['pgpImport'],
+                        newcontacts: newPlan['contactList'],
+                        newdelaySend: newPlan['delaySend'],
+                        newsendLimits: newPlan['sendLimits'],
+                        newrecipPerMail:newPlan['recipPerMail'],
+                        newfolderExpiration: newPlan['folderExpire'],
+                        newsecLog: newPlan['secLog'],
+                        newfiltEmail: newPlan['filter'],
 
 					});
 					if(result['data']['monthlyCharge']!=app.user.get("userPlan")['monthlyCharge']){
@@ -404,239 +341,6 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 				}
 			});
 
-
-		},
-
-		presetSliders: function(){
-			var thisComp = this;
-			var sBox = $("#sBoxSize");
-			$("#boxSize").slider({
-				min: 1,
-				max: 7,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sBox[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sBox[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						boxSize: sBox.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-
-			var sCust = $("#sCustDomain");
-			$("#cDomain").slider({
-				min: 1,
-				max: 6,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sCust[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sCust[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						cDomain: sCust.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-
-			var sEmailAlias = $("#sEmailAlias");
-			$("#aliases").slider({
-				min: 1,
-				max: 4,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sEmailAlias[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sEmailAlias[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						aliases: sEmailAlias.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-			var sPgpStrength = $("#sPgpStrength");
-			$("#pgpStrength").slider({
-				min: 1,
-				max: 6,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sPgpStrength[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sPgpStrength[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						pgpStrength: sPgpStrength.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-			var sAttSize = $("#sAttSize");
-			$("#attSize").slider({
-				min: 1,
-				max: 6,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sAttSize[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sAttSize[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						attSize: sAttSize.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-			var sDispEmails = $("#sDispEmails");
-			$("#dispEmails").slider({
-				min: 1,
-				max: 4,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sDispEmails[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sDispEmails[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						dispEmails: sDispEmails.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-			var sImportPGP = $("#sImportPGP");
-			$("#importPGP").slider({
-				min: 1,
-				max: 2,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sImportPGP[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sImportPGP[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						importPGP: sImportPGP.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-			var sContacts = $("#sContacts");
-			$("#contacts").slider({
-				min: 1,
-				max: 9,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sContacts[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sContacts[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						contacts: sContacts.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-			var sDelaySend = $("#sDelaySend");
-			$("#delaySend").slider({
-				min: 1,
-				max: 2,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sDelaySend[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sDelaySend[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						delaySend: sDelaySend.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-
-            var sRecipPerMail = $("#sRecipPerMail");
-            $("#recipPerMail").slider({
-                min: 1,
-                max: 6,
-                range: "min",
-                disabled: thisComp.state.editDisabled,
-                value: sRecipPerMail[ 0 ].selectedIndex + 1,
-                slide: function (event, ui) {
-                    sRecipPerMail[ 0 ].selectedIndex = ui.value - 1;
-                    thisComp.setState({
-                        recipPerMail: sRecipPerMail.val()
-                    });
-                    thisComp.calculateNewPrice();
-                }
-            });
-
-
-            var sSendLimits = $("#sSendLimits");
-			$("#sendLimits").slider({
-				min: 1,
-				max: 6,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sSendLimits[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sSendLimits[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						sendLimits: sSendLimits.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-			var sFolderExpiration = $("#sFolderExpiration");
-			$("#folderExpiration").slider({
-				min: 1,
-				max: 2,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sFolderExpiration[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sFolderExpiration[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						folderExpiration: sFolderExpiration.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-
-/*
-			var sSecLog = $("#sSecLog");
-			$("#secLog").slider({
-				min: 1,
-				max: 2,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sSecLog[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sSecLog[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						secLog: sSecLog.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
-*/
-			var sFiltEmail = $("#sFiltEmail");
-			$("#filtEmail").slider({
-				min: 1,
-				max: 6,
-				range: "min",
-				disabled: thisComp.state.editDisabled,
-				value: sFiltEmail[ 0 ].selectedIndex + 1,
-				slide: function (event, ui) {
-					sFiltEmail[ 0 ].selectedIndex = ui.value - 1;
-					thisComp.setState({
-						filtEmail: sFiltEmail.val()
-					});
-					thisComp.calculateNewPrice();
-				}
-			});
 
 		},
 
@@ -654,14 +358,8 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
             def.done(function(){
 
                 var currentPlan=app.user.get("userPlan");
-
                 var decodedPlan=currentPlan['planData'];
 
-                // console.log(currentPlan);
-                //var t = currentPlan['cycleEnd'].split(/[- :]/);
-
-                //
-                // var timeEnd=new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
                 var timeEnd=new Date(currentPlan['cycleEnd']*1000);
                 var dateStarted=new Date(currentPlan['created']*1000).getTime();
                 var goodOld=new Date(2015, 11, 19).getTime();
@@ -670,6 +368,29 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
                 if(goodOld>dateStarted){
                     amount=5;
                 }
+
+                if(currentPlan['paymentVersion']===1){
+                  if( currentPlan['monthlyCharge']===0){
+                          thisComp.setState({
+                              planSelector:0,
+                              paymentVersion:1
+                          });
+                      }else{
+                      thisComp.setState({
+                          planSelector:77,
+                          paymentVersion:currentPlan['paymentVersion'],
+                          currentPlan:77
+                      });
+                  }
+                }if(currentPlan['paymentVersion']===2){
+                    thisComp.setState({
+                        planSelector:currentPlan['planSelected'],
+                        paymentVersion:2,
+                        currentPlan:currentPlan['planSelected']
+                    });
+                }
+
+
 
                 thisComp.setState({
 
@@ -696,7 +417,6 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
                 });
 
                 setTimeout(function(){
-                    thisComp.presetSliders();
                     thisComp.calculateNewPrice();
                 },100);
 
@@ -717,8 +437,33 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 
         },
 
+        planOptions:function(){
+            var planOptions=[];
+
+            if(this.state.paymentVersion===1){
+                planOptions.push(
+                    <option key="opt0" value="0">Free Plan Will Expire (July 10, 2017)</option>
+                );
+            }
+
+            planOptions.push(
+                <option key="opt1" value="1">Basic - $2/month</option>
+            );
+            planOptions.push(
+                <option key="opt7" value="7">Advanced - $7/month</option>
+            );
+            planOptions.push(
+                <option key="opt15" value="15">Premium - $15/month</option>
+            );
+            planOptions.push(
+                <option key="opt77" value="77">Custom Plan</option>
+            );
+
+            return planOptions;
+        },
 		accountDataTable: function () {
-			var options = [];
+
+            var options = [];
 
             var paid=[];
             if(app.user.get("userPlan")['balance']<0){
@@ -786,33 +531,26 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 			var options = [];
 
 			//Mailbox Size
+            var boxDif="";
+            var bxS=this.state.newboxSize;
+
+            if(this.state.newboxSize!=this.state.boxSize){
+                boxDif=" => "+(bxS>1000?bxS/1000+" Gb":bxS+" MB");
+            }
 			options.push(<tr key="1">
 				<td className="col-xs-5 no-right-padding">
 					<b>Mailbox Size:</b>
 				</td>
 				<td className="col-xs-7">
-					<span className={this.state.desktopViewClass}>{(this.state.boxSize>1000?this.state.boxSize/1000+" Gb":this.state.boxSize+" MB")}</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sBoxSize" id="sBoxSize" className="form-control" disabled={this.state.editDisabled} value={this.state.boxSize}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="200">200 Mb</option>
-								<option value="600">600 Mb</option>
-								<option value="1000">1 Gb</option>
-								<option value="2000">2 Gb</option>
-								<option value="3000">3 Gb</option>
-								<option value="4000">4 Gb</option>
-								<option value="5000">5 Gb</option>
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="boxSize"></div>
-
+                    {(this.state.boxSize>1000?this.state.boxSize/1000+" Gb":this.state.boxSize+" MB")}
+                    &nbsp;<b>{boxDif}</b>
 				</td>
 			</tr>);
+
+            var domDif ="";
+            if(this.state.newcDomain!=this.state.cDomain) {
+                var domDif = " => " + this.state.newcDomain;
+            }
 
 
 			options.push(<tr key="2" className="">
@@ -820,192 +558,82 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 					<b>Custom Domain:</b>
 				</td>
 				<td className="col-xs-7">
-					<span className={this.state.desktopViewClass}>{this.state.cDomain == 0 ? "No" : this.state.cDomain}</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sCustDomain" id="sCustDomain" className="form-control" disabled={this.state.editDisabled} value={this.state.cDomain}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="0">No</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="5">5</option>
-								<option value="10">10</option>
-								<option value="20">20</option>
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="cDomain"></div>
-
-
-				</td>
+                    {this.state.cDomain}
+                    &nbsp;<b>{domDif}</b>
+                </td>
 			</tr>);
+
+            var alDif ="";
+            if(this.state.newaliases!=this.state.aliases) {
+                var alDif = " => " + this.state.newaliases;
+            }
 			options.push(<tr key="3" className="">
 				<td className="col-xs-5">
 					<b>Email Aliases:</b>
 				</td>
 				<td>
-
-					<span className={this.state.desktopViewClass}>{this.state.aliases}</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sEmailAlias" id="sEmailAlias" className="form-control" disabled={this.state.editDisabled} value={this.state.aliases}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="3">3</option>
-								<option value="5">5</option>
-								<option value="15">15</option>
-								<option value="40">40</option>
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="aliases"></div>
-
+                    {this.state.aliases}
+                    &nbsp;<b>{alDif}</b>
 				</td>
 			</tr>);
 
+            var pgpStrengthDif="";
+            if(this.state.newpgpStrength!=this.state.pgpStrength) {
+                var pgpStrengthDif = " => " + this.state.newpgpStrength + "  bit";
+            }
 			options.push(<tr key="4" className="">
 				<td className="col-xs-5 no-right-padding">
 					<b>PGP Key Strength:</b>
 				</td>
 				<td>
-					<span className={this.state.desktopViewClass}>{this.state.pgpStrength} bit</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sPgpStrength" id="sPgpStrength" className="form-control" disabled={this.state.editDisabled} value={this.state.pgpStrength}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="2048">2048 bits</option>
-								<option value="3072">3072 bits</option>
-								<option value="4096">4096 bits</option>
-								<option value="5120">5120 bits</option>
-                                <option value="7168">7168 bits</option>
-                                <option value="8192">8192 bits</option>
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="pgpStrength"></div>
-
-
+                    {this.state.pgpStrength} bit
+                    &nbsp;<b>{pgpStrengthDif}</b>
 				</td>
 			</tr>);
+
+            var attSizeDif="";
+            if(this.state.newattSize!=this.state.attSize){
+                attSizeDif=" => "+this.state.newattSize+" Mb";
+            }
+
 			options.push(<tr key="5" className="">
 				<td>
 					<b>Attachment Size:</b>
 				</td>
 				<td>
-					<span className={this.state.desktopViewClass}>{this.state.attSize} Mb</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sAttSize" id="sAttSize" className="form-control" disabled={this.state.editDisabled} value={this.state.attSize}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="10">10 Mb</option>
-								<option value="15">15 Mb</option>
-								<option value="20">20 Mb</option>
-								<option value="30">30 Mb</option>
-								<option value="40">40 Mb</option>
-								<option value="50">50 Mb</option>
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="attSize"></div>
-
+                    {this.state.attSize} Mb
+                    &nbsp;<b>{attSizeDif}</b>
 				</td>
 			</tr>);
 
-			options.push(<tr key="6" className={this.state.detailButtonVisible}>
-				<td colSpan="2">
-					<button type="button" className="btn btn-default pull-right hidden" onClick={this.handleClick.bind(this, 'showDetail')}>Detailed View</button>
-				</td>
-			</tr>);
+            var disemailDif="";
+            if(this.state.newdispEmails!=this.state.dispEmails){
+                disemailDif=" => "+this.state.newdispEmails;
+            }
 
-			options.push(<tr key="7" className={this.state.detailVisible}>
+            options.push(<tr key="7" className={this.state.detailVisible}>
 				<td>
 					<b>Disposable Emails:</b>
 				</td>
 				<td>
-					<span className={this.state.desktopViewClass}>{this.state.dispEmails}</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sDispEmails" id="sDispEmails" className="form-control" disabled={this.state.editDisabled} value={this.state.dispEmails}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="5">5</option>
-								<option value="9">9</option>
-								<option value="17">17</option>
-								<option value="40">40</option>
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="dispEmails"></div>
-
-
+                    {this.state.dispEmails}
+                    &nbsp;<b>{disemailDif}</b>
 				</td>
 			</tr>);
 
-			options.push(<tr key="8" className={this.state.detailVisible+" hidden"}>
-				<td>
-					<b>Import PGP Keys:</b>
-				</td>
-				<td>
-					<span className={this.state.desktopViewClass}>{this.state.importPGP == 0 ? "No" : "Yes"}</span>
 
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sImportPGP" id="sImportPGP" className="form-control" disabled={this.state.editDisabled} value={this.state.importPGP}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="0">No</option>
-								<option value="1">Yes</option>
-
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-3 normal-slider " + this.state.desktopViewClass} id="importPGP"></div>
-
-				</td>
-			</tr>);
+            var contDif="";
+            if(this.state.newcontacts!=this.state.contacts){
+                contDif=" => "+this.state.newcontacts+" contacts";
+            }
 
 			options.push(<tr key="9" className={this.state.detailVisible}>
 				<td>
 					<b>Address Book:</b>
 				</td>
 				<td>
-					<span className={this.state.desktopViewClass}>{this.state.contacts} contacts</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sContacts" id="sContacts" className="form-control" disabled={this.state.editDisabled} value={this.state.contacts}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="100">100 contacts</option>
-								<option value="200">200 contacts</option>
-								<option value="400">400 contacts</option>
-								<option value="600">600 contacts</option>
-								<option value="1000">1000 contacts</option>
-								<option value="2000">2000 contacts</option>
-								<option value="3000">3000 contacts</option>
-								<option value="5000">5000 contacts</option>
-								<option value="10000">10000 contacts</option>
-
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="contacts"></div>
-
+                    {this.state.contacts} contacts
+                    &nbsp;<b>{contDif}</b>
 				</td>
 			</tr>);
 
@@ -1034,65 +662,40 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 				</td>
 			</tr>);
 
+            var recipDif="";
+            if(this.state.newrecipPerMail!=this.state.recipPerMail){
+                recipDif=" => "+this.state.newrecipPerMail+" recipients/email";
+            }
 
             options.push(<tr key="11a" className={this.state.detailVisible}>
                 <td>
                     <b>Recipient Per Email:</b>
                 </td>
                 <td>
-                    <span className={this.state.desktopViewClass}>{this.state.recipPerMail} recipients/email</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-                            <select name="sRecipPerMail" id="sRecipPerMail" className="form-control" disabled={this.state.editDisabled} value={this.state.recipPerMail}
-                                    onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">20</option>
-                                <option value="40">30</option>
-                                <option value="50">40</option>
-                                <option value="60">50</option>
-
-                            </select>
-                        </div>
-					</span>
-                    <div className="clearfix"></div>
-
-                    <div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="recipPerMail"></div>
-
-
+                    {this.state.recipPerMail} recipients/email
+                    &nbsp;<b>{recipDif}</b>
                 </td>
             </tr>);
 
+            var sendEmDif="";
+            if(this.state.newsendLimits!=this.state.sendLimits){
+                sendEmDif=" => "+this.state.newsendLimits+" emails/hour";
+            }
 
 			options.push(<tr key="11" className={this.state.detailVisible}>
 				<td>
 					<b>Sending Limits:</b>
 				</td>
 				<td>
-					<span className={this.state.desktopViewClass}>{this.state.sendLimits} recipients/hour</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sSendLimits" id="sSendLimits" className="form-control" disabled={this.state.editDisabled} value={this.state.sendLimits}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="20">20/hour</option>
-								<option value="40">40/hour</option>
-								<option value="80">80/hour</option>
-								<option value="200">200/hour</option>
-								<option value="500">500/hour</option>
-								<option value="1000">1000/hour</option>
-
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-11 normal-slider " + this.state.desktopViewClass} id="sendLimits"></div>
-
-
+                    {this.state.sendLimits} emails/hour
+                    &nbsp;<b>{sendEmDif}</b>
 				</td>
 			</tr>);
+
+            var foldExpDif="";
+            if(parseInt(this.state.newfolderExpiration)!==parseInt(this.state.folderExpiration)){
+                foldExpDif=" => "+(this.state.newfolderExpiration == 0 ? "No" : "Yes");
+            }
 
 			options.push(<tr key="12" className={"freemium "+this.state.detailVisible}>
 				<td>
@@ -1104,23 +707,10 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
                     </a>
 				</td>
 				<td>
-					<span className={this.state.desktopViewClass}>{this.state.folderExpiration == 0 ? "No" : "Yes"}</span>
-
-					<span className={"col-xs-12 " + this.state.mobileViewClass}>
-						<div className="form-group">
-							<select name="sFolderExpiration" id="sFolderExpiration" className="form-control" disabled={this.state.editDisabled} value={this.state.folderExpiration}
-							onChange={this.handleChange.bind(this, 'changeBoxSize')}>
-								<option value="0">No</option>
-								<option value="1">Yes</option>
-
-							</select>
-						</div>
-					</span>
-					<div className="clearfix"></div>
-
-					<div className={"col-xs-3 normal-slider " + this.state.desktopViewClass} id="folderExpiration"></div>
-
-
+                    {
+                        this.state.folderExpiration == 0 ? "No" : "Yes"
+                    }
+                    &nbsp;<b>{foldExpDif}</b>
 				</td>
 			</tr>);
 
@@ -1182,7 +772,7 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 				<td className="col-xs-6">
 					<b>Current Cost:</b>
 				</td>
-				<td className="col-xs-6">{this.state.currentServiceCost}</td>
+				<td className="col-xs-6">{accounting.formatMoney(this.state.currentServiceCost)}</td>
 			</tr>);
 
 			return options;
@@ -1234,8 +824,19 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 								<table className=" table table-hover table-striped datatable table-light">
 							{this.accountDataTable()}
 								</table>
+                                <div className="form-group">
+                                    <label htmlFor="disabledTextInput">Your Plan</label>
+<span className="col-xs-12 ">
+						<div className="form-group">
+                            <select name="planSelector" id="planSelector" className="form-control" visible={this.state.editDisabled} disabled={this.state.editDisabled} value={this.state.planSelector}
+                                    onChange={this.handleChange.bind(this, 'changeBoxSize')} value={this.state.planSelector}>
+                                {this.planOptions()}
+                            </select>
+                        </div>
+					</span>
+                                </div>
 
-								<h3 className="pull-left">Current Plan Overview:</h3>
+								<h3 className="pull-left">Selected Plan Overview:</h3>
 
 								<table className=" table table-hover table-striped datatable table-light">
 
