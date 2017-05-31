@@ -68,7 +68,7 @@ define(['react'], function (React) {
 									</h5>
 
 									<div className="button">
-										<a className="btn btn-primary standard-button inpage-scroll" onClick={this.handleClick.bind(this, 'signUp')}>Sign Up For Free</a>
+										<a className="btn btn-primary standard-button inpage-scroll" onClick={this.handleClick.bind(this, 'signUp')}>Sign Up For 7-days Trial</a>
 									</div>
 								{/*
 									<div className="button">

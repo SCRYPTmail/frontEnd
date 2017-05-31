@@ -58,7 +58,7 @@ define(['react'], function (React) {
 								<li className="login js-login"><a onClick={this.handleClick.bind(this, 'login')}>Login</a>
 								</li>
 								<li className="register-button js-register inpage-scroll">
-									<a className="navbar-register-button" onClick={this.handleClick.bind(this, 'signUp')}>Sign Up For Free</a>
+									<a className="navbar-register-button" onClick={this.handleClick.bind(this, 'signUp')}>Sign Up For 7-days Trial</a>
 								</li>
 							</ul>
 						</div>
