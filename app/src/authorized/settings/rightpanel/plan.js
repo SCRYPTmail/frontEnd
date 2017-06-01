@@ -247,24 +247,10 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 
 				case "changePayment":
 					var targVal=event.target.value;
-					var post={
-						userId:app.user.get("userId"),
-						aliases:thisComp.state.aliases,
-						boxSize: thisComp.state.boxSize,
-						cDomain: thisComp.state.cDomain,
-						dispEmails: thisComp.state.dispEmails,
-						pgpStrength: thisComp.state.pgpStrength,
-						attSize: thisComp.state.attSize,
-						importPGP: thisComp.state.importPGP,
-						contacts: thisComp.state.contacts,
-						delaySend: thisComp.state.delaySend,
-						sendLimits: thisComp.state.sendLimits,
-                        recipPerMail:thisComp.state.recipPerMail,
-						folderExpiration: thisComp.state.folderExpiration,
-						secLog: thisComp.state.secLog,
-						filtEmail: thisComp.state.filtEmail,
-
-					}
+                    var post={
+                        'userId':app.user.get('userId'),
+                        'planSelector':this.state.planSelector
+                    }
 
 					if(targVal=='bit'){
 
