@@ -767,9 +767,9 @@ define([
 
             var inbox=unopened[app.user.get("systemFolders")['inboxFolderId']];
             if(inbox>0){
-                document.title="("+inbox+" unread) - "+app.user.get('email') + " - SCRYPTmail.com";
+                document.title="("+inbox+" unread) - "+app.user.get('email') + " - "+app.defaults.get('domainMail');
             }else{
-                document.title=app.user.get('email') +" - SCRYPTmail.com";
+                document.title=app.user.get('email') +" - "+app.defaults.get('domainMail');
             }
 
 

@@ -499,7 +499,6 @@ define([
 						//app.notifications.systemMessage('wrngUsrOrPass');
 					}else
 					{
-                        console.log('here3');
 						$.each(data, function (index, value) {
 							$.each(value, function (index1, value1) {
 
