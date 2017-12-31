@@ -26,7 +26,7 @@ define([
 			var arr = emailInput.split("@");
 
 			if (arr.length == 1)
-				var email = arr[0].toLowerCase() + '@scryptmail.com';
+				var email = arr[0].toLowerCase() + app.defaults.get('domainMail');
 			else
 				var email = emailInput.toLowerCase();
 
@@ -35,7 +35,7 @@ define([
 				//todo get one step or two before submit, minimize exposure
 				username:app.transform.SHA512(email),
 				password:app.transform.SHA512(password),
-				password2step:app.transform.SHA512(app.globalF.makeDerivedFancy(password, 'scrypTmail')),
+				password2step:app.transform.SHA512(app.globalF.makeDerivedFancy(password, app.defaults.get('hashToken'))),
 				factor2:factor2
 
 			}

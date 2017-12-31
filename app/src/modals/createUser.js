@@ -226,9 +226,9 @@ define(['app', 'react'], function (app, React) {
                     });
 
                     var userAddress = thisComp.state.email.toLowerCase().split('@')[0];
-                    var email = userAddress + '@scryptmail.com';
+                    var email = userAddress + app.defaults.get('domainMail');
 
-                    var pass = app.transform.SHA512(app.globalF.makeDerivedFancy(thisComp.state.newPass, 'scrypTmail'));
+                    var pass = app.transform.SHA512(app.globalF.makeDerivedFancy(thisComp.state.newPass, app.defaults.get('hashToken')));
                     var folderKey = app.globalF.makeRandomBytes(32);
                     var salt = app.globalF.makeRandomBytes(256);
                     var secret = app.globalF.makeDerived(thisComp.state.newPass, salt);
@@ -292,7 +292,7 @@ define(['app', 'react'], function (app, React) {
                 method: "POST",
                 url: "api/checkEmailExistV2",
                 data: {
-                    email: this.state.email + '@scryptmail.com'
+                    email: this.state.email + app.defaults.get('domainMail')
 
                 },
                 dataType: "text"
@@ -376,7 +376,7 @@ define(['app', 'react'], function (app, React) {
                                                maxLength="160"
                                                onChange={this.handleChange.bind(this, 'email')}
                                                value={this.state.email}/>
-                                        <span className="input-group-addon">@scryptmail.com</span>
+                                        <span className="input-group-addon">{app.defaults.get('domainMail')}</span>
                                     </div>
                                     <label
                                         className={"control-label pull-left "+(this.state.emailError==""?"hidden":"")}

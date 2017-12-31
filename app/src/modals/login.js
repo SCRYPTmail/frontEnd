@@ -193,7 +193,7 @@ define(['react','app','validation'], function (React,app,Validation) {
 							<div className="form-group">
 								<div className="input-group">
 									<input type="text" name="email" id="LoginForm_username" className="form-control input-lg" defaultValue={app.defaults.get('userName')} placeholder="email" maxLength="160"/>
-									<span className="input-group-addon">@scryptmail.com</span>
+									<span className="input-group-addon">{app.defaults.get('domainMail')}</span>
 								</div>
 							</div>
 							<div className="form-group">

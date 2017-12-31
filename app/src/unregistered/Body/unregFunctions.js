@@ -59,7 +59,7 @@ define([
             });
 
         },
-        deleteEmailsUnreg:function(messageId,modKey,callback){
+        deleteEmailsUnreg:function(messageId,modKey){
             console.log(messageId);
             console.log(modKey);
             var post={
@@ -71,7 +71,6 @@ define([
                 console.log(result);
                 if(result['response']==='success'){
                     app.notifications.systemMessage('msgRemoved');
-                    callback();
                     app.restartApp();
                 }else{
                     app.notifications.systemMessage('tryAgain');
@@ -86,8 +85,8 @@ define([
 
            //
            // if (action == 'replyStrict' || action == 'replyFull' || action == 'replyAStrict' || action == 'replyAFull') {
-                    console.log(app.user.get('currentMessageView'));
-                    console.log(app.user.get('draftMessageView'));
+                   // console.log(app.user.get('currentMessageView'));
+                   // console.log(app.user.get('draftMessageView'));
 
                     var currentMessage = app.user.get('currentMessageView');
                     var draft = app.user.get('draftMessageView');
@@ -101,7 +100,7 @@ define([
                     to[currentMessage['meta']['from']]={};
                     draft['meta']['to']=to;
 
-            console.log(fromAll);
+           // console.log(fromAll);
 
                     $.each(fromAll, function (index, data) {
                         console.log(app.globalF.getEmailsFromString(app.transform.from64str(data)));
@@ -111,7 +110,7 @@ define([
                         }
                     });
 
-                    console.log(draft['meta']['from']);
+                 //   console.log(draft['meta']['from']);
 
 
                     draft['meta']['toCC'] = {};
@@ -136,7 +135,7 @@ define([
                     //options.timeZone = 'UTC';
                     options.timeZoneName = 'short';
                     var fromMail = app.globalF.parseEmail(app.transform.from64str(currentMessage['meta']['from']));
-                    console.log(draft);
+                    //console.log(draft);
                     //if(action=='replyStrict' || action=='replyFull'){
                     var preReplyText = '<br/><br/><br/><br/>--------------------------------------------<br/><br/>' + 'On ' + new Date(currentMessage['meta']['timeSent'] * 1000).toDateString(options) + ' at ' + new Date(currentMessage['meta']['timeSent'] * 1000).toLocaleTimeString() + ', ' + fromMail['htmlFdisplay'] +
                         ' wrote: <br/>';
@@ -153,7 +152,7 @@ define([
         },
         sendMail:function(draft,clearEmail,recipient){
 
-            console.log(draft);
+          //  console.log(draft);
 
                 var keys = "";
                 var keyArr = {'keys': []};
@@ -177,7 +176,7 @@ define([
                 };
                 var emailtoCC=jQuery.extend(true, {}, draft);
 
-                console.log(draft);
+             //   console.log(draft);
                 //console.log(app.transform.from64str(mailKey));
 
 
@@ -190,7 +189,7 @@ define([
 
                 }
 
-            console.log(toCCrcpt);
+           // console.log(toCCrcpt);
 
                 if(toCCkeys.keys.length>0){
                     var key=app.globalF.createEncryptionKey256();
@@ -213,9 +212,9 @@ define([
                         'emailKey':     app.transform.to64bin(key)
                     };
 
-                    console.log('dddd');
-                    console.log(draft['meta']['to']);
-                    console.log(toCCmeta);
+                   // console.log('dddd');
+                   // console.log(draft['meta']['to']);
+                   // console.log(toCCmeta);
 
                     var toCCPromise = $.Deferred();
                     openpgp.encryptMessage(toCCkeys.keys, app.transform.to64str(JSON.stringify(toCCmeta)))
@@ -234,7 +233,7 @@ define([
 
                 Promise.all(emailpromises).then(function(values) {
                     //console.log('All done');
-                    console.log(inTextEmails);
+                //    console.log(inTextEmails);
 
 
                    var post= {
@@ -287,8 +286,8 @@ define([
                 });
 
 
-                console.log(toCCmeta);
-                console.log(inTextEmails);
+               // console.log(toCCmeta);
+              //  console.log(inTextEmails);
 
 
         }

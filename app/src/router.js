@@ -51,8 +51,6 @@ define(['app','backbone', 'react','jquery','bootstrap','cmpld/splashPage/SplashC
 		*/
 		before: function(callback, args) {
 
-			console.log('fffff')
-
 			//console.log(app.user.get("profileVersion"));
 
 
