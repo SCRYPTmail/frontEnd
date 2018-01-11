@@ -850,7 +850,7 @@ define(['react','app', 'summernote','select2'], function (React,app,summernote,s
 
 				if (Object.keys(thisComp.state.fileObject).length <= 10 && (thisComp.state.fileSize + file['size'] <= parseInt(app.user.get('userPlan')['planData']['attSize'])*1024*1024*1.1)
 					) {
-                    if(file['size']<16000000){
+                    if(file['size']<parseInt(app.user.get('userPlan')['planData']['attSize'])*1024*1024*1.1){
                         if(Object.keys(fileObject).indexOf(app.transform.to64str(file['name']))==-1){
                             app.user.set({
                                 'uploadInProgress':true
