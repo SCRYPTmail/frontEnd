@@ -109,14 +109,14 @@ define(['react','app'], function (React,app) {
 			}else{
 				app.serverCall.ajaxRequest('retrievePublicKeys', post, function (result) {
 					if(result['response']=="success"){
-						console.log(result['data']);
+						//console.log(result['data']);
 						if(Object.keys(result['data']).length>0){
 							var senderPK=result['data'][app.transform.SHA512(fromEmail)]['mailKey'];
 							var emailVersion=app.user.get('currentMessageView')['version'];
 
 							//console.log(app.user.get('currentMessageView'));
 							if(app.globalF.verifySignature(senderPK,emailVersion)===true){
-								console.log('correct');
+								//console.log('correct');
 								options.push(
 									<div key="sig1" className="alert alert-success pgpsignature-success"><i className="fa-fw fa fa-check"></i>	<strong>Signature verified</strong> To learn more about <strong><a href="https://blog.scryptmail.com/signatures" target="_blank">signatures</a></strong>. Link will be open in new tab</div>
 								);
@@ -126,7 +126,7 @@ define(['react','app'], function (React,app) {
 
 
 							}else if(app.globalF.verifySignature(senderPK,emailVersion)===false){
-								console.log('smthg wrong');
+							//	console.log('smthg wrong');
 								options.push(
 									<div key="sig1" className="alert alert-danger pgpsignature-danger"><i className="fa-fw fa fa-times"></i>	<strong>Signature mismatch</strong> To learn more about <strong><a href="https://blog.scryptmail.com/signatures" target="_blank">signatures</a></strong>. Link will be open in new tab</div>
 								);
@@ -197,7 +197,7 @@ define(['react','app'], function (React,app) {
 
                 if(email['meta']['fromExtra']!=''){
 
-                console.log(email);
+               // console.log(email);
                    if(app.transform.check64str(email['meta']['fromExtra'])){
                        fromExtra=filterXSS(app.transform.from64str(email['meta']['fromExtra']));
                    }else{
@@ -218,15 +218,15 @@ define(['react','app'], function (React,app) {
 
                 emailAddress= app.globalF.exctractOwnEmail(emailsTo);
 
-                console.log(emailAddress);
-                console.log(emailsCC);
+             //   console.log(emailAddress);
+             //   console.log(emailsCC);
 
                 if(emailAddress===false){
                     emailAddress= app.globalF.exctractOwnEmail(emailsCC);
                 }
 
 
-				console.log(emailAddress);
+			//	console.log(emailAddress);
 
 				var pins="";
 				var pin=[];
@@ -902,7 +902,7 @@ define(['react','app'], function (React,app) {
 
 
 				case 'showHeader':
-                    console.log(app.user.get('currentMessageView'));
+              //      console.log(app.user.get('currentMessageView'));
 					var w = window.open();
 					var html ='<pre ' +
 						'style="white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word;">'+app.transform.escapeTags(app.transform.from64str(app.user.get('currentMessageView')['originalBody']['rawHeader']))+'<pre>';

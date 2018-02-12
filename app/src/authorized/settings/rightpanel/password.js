@@ -104,7 +104,7 @@ define(['react', 'app', 'ajaxQueue'], function (React, app, ajaxQueue) {
 			//post['Testpassword'] = testPass;
 
 			if (app.user.get("oneStep")) {
-				post['password'] = app.transform.SHA512(app.globalF.makeDerivedFancy(testPass, 'scrypTmail'));
+				post['password'] = app.transform.SHA512(app.globalF.makeDerivedFancy(testPass, app.defaults.get('hashToken')));
 				post['steps'] = 1;
 			} else {
 				post['password'] = app.transform.SHA512(testPass);
@@ -242,14 +242,9 @@ define(['react', 'app', 'ajaxQueue'], function (React, app, ajaxQueue) {
 
 					this.checkIfFirstPassGood(event, function (result) {
 						if (result) {
-							console.log(event);
-							console.log('4');
-							//app.user.set({"password": app.transform.SHA512(app.globalF.makeDerivedFancy(event, 'scrypTmail'))});
-
-
 
                             app.user.set({"password": app.transform.SHA512(event)});
-                            app.user.set({"newPassword": app.transform.SHA512(app.globalF.makeDerivedFancy(event, 'scrypTmail'))});
+                            app.user.set({"newPassword": app.transform.SHA512(app.globalF.makeDerivedFancy(event, app.defaults.get('hashToken')))});
                             app.user.set({"newSecondPassword":  app.globalF.makeDerived(event,app.user.get('salt'))});
 
 							app.user.set({"oneStep": true});
@@ -321,8 +316,8 @@ define(['react', 'app', 'ajaxQueue'], function (React, app, ajaxQueue) {
 
 								//check with user pass field event
 
-								app.user.set({"password": app.transform.SHA512(app.globalF.makeDerivedFancy(pass, 'scrypTmail'))});
-								app.user.set({"newPassword": app.transform.SHA512(app.globalF.makeDerivedFancy(thisComp.state.password1input.text, 'scrypTmail'))});
+								app.user.set({"password": app.transform.SHA512(app.globalF.makeDerivedFancy(pass, app.defaults.get('hashToken')))});
+								app.user.set({"newPassword": app.transform.SHA512(app.globalF.makeDerivedFancy(thisComp.state.password1input.text, app.defaults.get('hashToken')))});
 								app.user.set({"newSecondPassword":  app.globalF.makeDerived(thisComp.state.password1input.text, app.user.get('salt'))});
 
 
@@ -409,7 +404,7 @@ define(['react', 'app', 'ajaxQueue'], function (React, app, ajaxQueue) {
                         var action="";
                         if(app.user.get("oneStep")){
                             app.user.set({"oneStep": false});
-                            app.user.set({"password": app.transform.SHA512(app.globalF.makeDerivedFancy(event, 'scrypTmail'))});
+                            app.user.set({"password": app.transform.SHA512(app.globalF.makeDerivedFancy(event, app.defaults.get('hashToken')))});
 
                             app.user.set({"newPassword": app.transform.SHA512(event)});
                             app.user.set({"newSecondPassword": app.globalF.makeDerived(thisComp.state.password2input.text, app.user.get('salt'))});

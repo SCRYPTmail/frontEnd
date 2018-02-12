@@ -2831,7 +2831,12 @@ a {
 }
 
 .splashnav img {
-    width: 170px;
+    width: 68px;
+    float:left;
+}
+.splashnav .logoname{
+    margin: 21px 0px 20px 7px;
+    width: 141px;
 }
 
 .splashnav .navbar-brand {
