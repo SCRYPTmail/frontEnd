@@ -2155,8 +2155,8 @@ define([
 		reply: function (action) {
 
                 console.log(action);
-				console.log(app.user.get('currentMessageView'));
-				console.log(app.user.get('draftMessageView'));
+				//console.log(app.user.get('currentMessageView'));
+				//console.log(app.user.get('draftMessageView'));
 
 				var currentMessage = app.user.get('currentMessageView');
 				var draft = app.user.get('draftMessageView');
@@ -2166,7 +2166,7 @@ define([
 				draft['messageId'] = "";
 
                 if(currentMessage['meta']['to']!=undefined && currentMessage['meta']['toCC']!=undefined ){
-                    console.log(currentMessage['meta']);
+                   // console.log(currentMessage['meta']);
                     var fromIn=[];
                     var to=[];
                     var toCC=[];
@@ -2207,7 +2207,7 @@ define([
 
 				//console.log(from instanceof Array
                 if (fromIn instanceof Array) {
-                    console.log(fromIn);
+                    //console.log(fromIn);
 					//find credent. for FROM field
                     $.each(fromIn, function (index, fromValue) {
 

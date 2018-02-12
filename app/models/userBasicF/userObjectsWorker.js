@@ -2647,7 +2647,7 @@ define([
 
 
 			//$.ajaxQueue.startNextRequest('tryAgain');
-			console.log(app.user);
+			//console.log(app.user);
 		},
 
 		savingObjects:function(objectName,objectData,callback){

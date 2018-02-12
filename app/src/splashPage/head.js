@@ -39,7 +39,8 @@ define(['react'], function (React) {
 								<span className="icon-bar"></span>
 							</button>
 							<a className="navbar-brand" href='/'>
-								<img src="/img/logo/scriptmail_logo.jpg" alt=""/>
+								<img src="/img/logo/shield.jpg" alt=""/>
+                                <img className="logoname" src="/img/logo/name.jpg" alt=""/>
 							</a>
 						</div>
 

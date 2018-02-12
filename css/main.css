@@ -351,13 +351,20 @@ body {
 }
 
 .authnavigation img {
-    height: 50px;
+    width: 51px;
+    float:left;
+}
+
+.authnavigation .logoname{
+    margin: 15px 0px 15px 7px;
+    width: 141px;
 }
 
 .authnavigation .navbar-header > button {
     margin-right: 13px;
     margin-top: 7px;
 }
+
 
 /*
 //END TOP navar //

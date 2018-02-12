@@ -227,12 +227,11 @@ define(['react','app'], function (React,app) {
 
 
 
-							ruleId:"",
-							fieldFrom:"",
-							fieldMatch:"",
-							fieldText:"",
-							fieldFolder:""
-
+                            ruleId:"",
+                            fieldFrom:"sender",
+                            fieldMatch:"strict",
+                            fieldText:"",
+                            fieldFolder:"1",
 
 						}
 					);

@@ -80,7 +80,7 @@ define(['react'], function (React) {
 
 
 								<div className="form-group">
-									<button  id='reguser' className="btn btn-primary standard-button" type="button" onClick={this.handleClick.bind(this, 'reportBug')}>Submit</button>
+									<button  id='regser' className="btn btn-primary standard-button" type="button" onClick={this.handleClick.bind(this, 'reportBug')}>Submit</button>
 								</div>
 
 

@@ -47,7 +47,7 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 
 				includeSignature:false,
 				signature:'',
-				domain:'@scryptmail.com',
+				domain:app.defaults.get('domainMail'),
 				domains:[],
 
 				showDisplayName:app.user.get("showDisplayName"),
@@ -371,7 +371,7 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 							aliasId:"",
 							aliasName:'',
 							aliasEmail:'',
-							domain:'@scryptmail.com',
+							domain:app.defaults.get('domainMail'),
 							includeSignature:false,
 							signature:"",
 							signatureEditable:false
@@ -548,7 +548,7 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 
 						var email = app.generate.makerandomEmail();
 						var name="";
-						var domain="@scryptmail.com";
+						var domain=app.defaults.get('domainMail');
 
 						var thisComp=this;
 						app.globalF.checkPlanLimits('disposable',thisComp.state.dataDispisable.length,function(result){
@@ -903,10 +903,10 @@ define(['react','app','dataTable','dataTableBoot'], function (React,app,DataTabl
 							{this.state.aliasEmail}
 							</h3>
 
-							<form id="addNewAliasForm">
+							<form id="addNewAliasForm2">
 								<div className={classFullSettSelect}>
 									<div className="form-group">
-										<input type="text" name="fromName" className="form-control" id="fromAliasName" value={this.state.aliasName} placeholder="from name" onChange={this.handleChange.bind(this, 'changeAliasName')}
+										<input type="text" name="fromName" className="form-control" id="fromAliasName2" value={this.state.aliasName} placeholder="from name" onChange={this.handleChange.bind(this, 'changeAliasName')}
 										disabled={!this.state.aliasNameEnabled}
 										/>
 									</div>

@@ -162,7 +162,8 @@ define(['react','app'], function (React,app) {
 							</div>
 
 							<a className="navbar-brand"  onClick={this.handleClick.bind(this, 'gotoInbox')}>
-								<img src="/img/scriptmail_logo.png" alt=""/>
+                                <img src="/img/logo/shield.jpg" alt=""/>
+                                <img className="logoname" src="/img/logo/name.jpg" alt=""/>
 							</a>
 						</div>
 
