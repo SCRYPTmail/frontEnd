@@ -259,7 +259,7 @@ define(['react', 'app','accounting','jsui'], function (React, app,accounting,jsu
 
 								thisComp.setState({
 										paymentType: targVal,
-										bitcoinLink:"https://www.coinbase.com/checkouts/"+result['data']['embed_code'],
+										bitcoinLink:result['data']['embed_code'],
 										bitcoinPay:"",
 										paypalPay:"hidden"
 									});
