@@ -1067,7 +1067,7 @@ define(['react','app'], function (React,app) {
 				<div className={"emailNo "+(this.state.hideEmailRead?"":"hidden")}>
 					<h3>Please Select Email</h3>
 
-                    <b><a href="https://blog.scryptmail.com/plan-updates/" target="_blank">Importan changes regarding free plans and paid features!</a></b>
+                    <b><a href="https://blog.scryptmail.com/plan-updates/" target="_blank">Important changes regarding free plans and paid features!</a></b>
                 <br/><br/>
                     Comments or question?<br/>Please contact us at <b>support@scryptmail.com</b>
                     <br/>
