@@ -40,7 +40,7 @@ define(['react','app'], function (React,app) {
 				secondPanelText:"Add New Rule",
 
 				button1class:'btn btn-primary pull-right',
-                button2class:'btn btn-warning pull-right margin-right-10',
+                button2class:'btn btn-warning pull-right margin-right-30',
 
 
 				inputNameClass:"form-group col-xs-12 col-sm-6 col-lg-7",
@@ -221,7 +221,7 @@ define(['react','app'], function (React,app) {
 							secondTab:"",
 
 							button1class:'btn btn-primary pull-right',
-                            button2class:'btn btn-warning pull-right margin-right-10',
+                            button2class:'btn btn-warning pull-right margin-right-30',
 
 							secondPanelText:"Add New Rule",
 

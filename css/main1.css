@@ -1331,6 +1331,9 @@ table.dataTable tbody tr.selected {
 .margin-right-10{
     margin-right:10px;
 }
+.margin-right-30{
+    margin-right:30px;
+}
 
 .clickable tr, .clickable td, .rowSelectable tr, .rowSelectable td{
     cursor:pointer;
