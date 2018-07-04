@@ -102,6 +102,9 @@ define(['react','app','wow',
 			//});
 
 			//$("html, body").animate({ scrollTop: height }, "slow");
+        console.log( document.referrer);
+           // var originator=document.referrer;
+
 
 		},
 		componentWillUnmount : function() {
