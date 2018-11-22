@@ -430,6 +430,14 @@ define([
 
                     break;
 
+                case 'CheckStatusV2':
+
+                    var url='/CheckStatusV2';
+                    delete postData['userToken'];
+
+                    break;
+
+
 
 
 
@@ -480,6 +488,8 @@ define([
 
 				success: function (data, textStatus) {
 					//console.log(data);
+                    //console.log(document.referrer);
+                    //console.log(textStatus);
 					app.user.set({
 						'onlineStatus':'online'
 					});
