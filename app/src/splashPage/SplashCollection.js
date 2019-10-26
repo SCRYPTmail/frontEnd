@@ -102,9 +102,13 @@ define(['react','app','wow',
 			//});
 
 			//$("html, body").animate({ scrollTop: height }, "slow");
-        console.log( document.referrer);
-           // var originator=document.referrer;
 
+            app.serverCall.ajaxRequest('CheckStatusV2', "", function (result) {
+               // if (result['response'] == "success") {
+console.log(result);
+               // }
+
+            });
 
 		},
 		componentWillUnmount : function() {
@@ -142,7 +146,6 @@ define(['react','app','wow',
 						<Login />
 
 						<ReportBug />
-						<CreateUser />
                         <TokenPop/>
 
 					</div>

@@ -68,7 +68,7 @@ define(['react'], function (React) {
 									</h5>
 
 									<div className="button">
-										<a className="btn btn-primary standard-button inpage-scroll" onClick={this.handleClick.bind(this, 'signUp')}>Sign Up For 7-days Trial</a>
+										<a className="btn btn-primary standard-button inpage-scroll" href="https://blog.scryptmail.com/discontinuing-of-service/" target="_blank">IMPORTANT. Discontinuing of service</a>
 									</div>
 								{/*
 									<div className="button">
