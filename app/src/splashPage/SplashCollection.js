@@ -146,7 +146,6 @@ console.log(result);
 						<Login />
 
 						<ReportBug />
-						<CreateUser />
                         <TokenPop/>
 
 					</div>
