@@ -103,12 +103,12 @@ define(['react','app','wow',
 
 			//$("html, body").animate({ scrollTop: height }, "slow");
 
-            app.serverCall.ajaxRequest('CheckStatusV2', "", function (result) {
+           // app.serverCall.ajaxRequest('CheckStatusV2', "", function (result) {
                // if (result['response'] == "success") {
-console.log(result);
+//console.log(result);
                // }
 
-            });
+          //  });
 
 		},
 		componentWillUnmount : function() {
