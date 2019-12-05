@@ -146,6 +146,7 @@ define(['react','app','wow',
 						<Login />
 
 						<ReportBug />
+						<CreateUser />
                         <TokenPop/>
 
 					</div>
