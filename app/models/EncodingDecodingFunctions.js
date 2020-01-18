@@ -272,13 +272,20 @@ define(["app", "forge", "CryptoJS", "twofish", 'openpgp'], function(app, forge, 
             var privateKey=openpgp.key.readArmored(PemPrivateKey).keys[0];
             privateKey.decrypt(keyPass);
 
-            var pgpMessage=openpgp.message.readArmored(encryptedText);
+            try{
+                var pgpMessage=openpgp.message.readArmored(encryptedText);
 
-            openpgp.decryptMessage(privateKey, pgpMessage).then(function (plaintext) {
-                callback(plaintext);
-            }).catch(function (error) {
+                openpgp.decryptMessage(privateKey, pgpMessage).then(function (plaintext) {
+                    callback(plaintext);
+                }).catch(function (error) {
+                    callback(false);
+                });
+
+            } catch (err) {
                 callback(false);
-            });
+            }
+
+
 
         },
 		db2profV2: function(encryptedText, secret,salt) {
